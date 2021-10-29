@@ -185,7 +185,7 @@ class AccountIntegrationTests(
         //testcase
         val getAccounts = accountService.findAll().size;
         val res = restTemplate.exchange(URI("/accounts"), HttpMethod.GET, entity, List::class.java)
-        val accountRes:List<AccountDto>? = res.body as List<AccountDto>?;
+        val accountRes: List<*>? = res.body
         assertThat(accountRes?.size).isEqualTo(getAccounts)
 
         //teardown
