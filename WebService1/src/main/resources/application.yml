@@ -1,0 +1,34 @@
+server:
+  port: ${PORT:5000}
+
+spring:
+  application:
+    name: webservice1
+  jpa:
+    database: H2
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        show_sql: false
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    platform: postgres
+    url: jdbc:h2:file:./data/h2
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+
+  h2:
+    console:
+      enabled: true
+      path: /h2
+      settings:
+        trace: false
+        web-allow-others: false
+
+token:
+  privateKey: ${PRIVATE_KEY:b3b5ccc219d2c6af3d52926cf1f1822f035c81054161df5b8938a1c83991d278}
+  issuer: ${ISSUER:webengineering.webservice1}
+  expirationTime: ${EXPIRATION_TIME:60}
