@@ -1,4 +1,4 @@
-import {NgModule, APP_INITIALIZER} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
@@ -21,12 +21,30 @@ import {EffectsModule} from "@ngrx/effects";
 import {StoreModule} from "@ngrx/store";
 import {reducers} from "./app.store";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
-import {AccountEffects} from "./car/+state/account.effects";
+import {AccountEffects} from "./account/+state/account.effects";
+import {NavbarComponent} from "./components/navbar/navbar.component";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatListModule} from "@angular/material/list";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatIconModule} from "@angular/material/icon";
+import { AccountComponent } from './components/account/account.component';
+import { HomeComponent } from './components/home/home.component';
+import { SearchComponent } from './components/search/search.component';
+import { TrendingComponent } from './components/trending/trending.component';
+import { SocialComponent } from './components/social/social.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    NavbarComponent,
+    AccountComponent,
+    HomeComponent,
+    SearchComponent,
+    TrendingComponent,
+    SocialComponent,
+    ScheduleComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +69,10 @@ import {AccountEffects} from "./car/+state/account.effects";
       name: 'CarShare',
       maxAge: 25,
     }),
+    MatSidenavModule,
+    MatListModule,
+    MatToolbarModule,
+    MatIconModule,
 
   ],
   providers: [],

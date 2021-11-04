@@ -1,6 +1,6 @@
 import {ActionReducerMap, createFeatureSelector, MetaReducer} from '@ngrx/store';
 import {storeFreeze} from 'ngrx-store-freeze';
-import * as fromAccount from './car/+state/account.reducer';
+import * as fromAccount from './account/+state/account.reducer';
 import {environment} from "../environments/environment";
 
 export interface State {

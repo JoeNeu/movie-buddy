@@ -1,0 +1,29 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" opened="true" fixedInViewport="true"
+      [attr.role]="'dialog'"
+      [mode]="'side'">
+    <mat-toolbar></mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink=""><mat-icon>home</mat-icon>&emsp;Home</a>
+      <a mat-list-item routerLink="/search"><mat-icon>search</mat-icon>&emsp;Search</a>
+      <a mat-list-item routerLink="/trending"><mat-icon>star</mat-icon>&emsp;Trending</a>
+      <a mat-list-item routerLink="/account"><mat-icon>account_circle</mat-icon>&emsp;Profile</a>
+      <a mat-list-item routerLink="/social"><mat-icon>people</mat-icon>&emsp;Social</a>
+      <a mat-list-item routerLink="/schedule"><mat-icon>schedule</mat-icon>&emsp;Schedule</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Movie Buddy</span>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

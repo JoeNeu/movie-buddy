@@ -2,7 +2,7 @@ import {createEntityAdapter, EntityAdapter, EntityState} from "@ngrx/entity";
 import {AccountModel} from "../../models/Account.model";
 import {Action, createReducer, on} from "@ngrx/store";
 
-import * as restAction from './account.actions';
+import * as accountAction from './account.actions';
 
 export const AccountAdapter: EntityAdapter<AccountModel> = createEntityAdapter<AccountModel>({
   selectId: vp => vp.id
@@ -19,11 +19,11 @@ export function reducer(state: AccountState | undefined, action: Action): Accoun
 
 const AccountReducer = createReducer(
   initialState,
-  // on(restAction.GetAllAccountsSuccess,
+  // on(accountAction.GetAllAccountsSuccess,
   //   (state, {Accounts}) => ({
   //     ...AccountAdapter.upsertMany(Accounts, state)
   //   })),
-  // on(restAction.DeleteAccountByIdSuccess,
+  // on(accountAction.DeleteAccountByIdSuccess,
   //   (state, {id}) => ({
   //     ...AccountAdapter.removeOne(id, state)
   //   })),

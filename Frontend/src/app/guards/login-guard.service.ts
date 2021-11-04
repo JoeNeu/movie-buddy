@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {UserService} from './user.service';
+import {UserService} from '../services/user.service';
 import {EMPTY, Observable, of} from 'rxjs';
 import {first, switchMap} from 'rxjs/operators';
 
@@ -20,7 +20,7 @@ export class IsLoggedInGuardService implements CanActivate {
       .pipe(first(),
         switchMap(isLoggedIn => {
           if (!isLoggedIn) {
-            this.router.navigate(['']);
+            this.router.navigate(['/login']);
             return EMPTY;
           } else {
             return of(true);
