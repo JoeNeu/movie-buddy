@@ -2,8 +2,6 @@
   <div>
     <mat-tab-group mat-align-tabs="center" #tabGroup>
       <mat-tab label="Login">
-<!--        <h1>CONFIG SERVICE VAL: </h1>-->
-<!--        <input type="text" [formControl]="registerGroup.get('testi')" />-->
         <h2>Log In</h2>
         <div class="row">
           <div class="col-8 offset-2">
@@ -18,8 +16,8 @@
         <div class="row">
           <div class="col-8 offset-2">
             <mat-form-field>
-              <mat-label>Username</mat-label>
-              <input placeholder="password" matInput type="password"
+              <mat-label>Password</mat-label>
+              <input placeholder="password" matInput type="text"
                      [formControl]="passwordControl">
             </mat-form-field>
           </div>
@@ -47,7 +45,7 @@
           <h2>Register</h2>
           <div class="col-8 offset-2">
             <mat-form-field>
-              <mat-label>First Name</mat-label>
+              <mat-label>Firstname</mat-label>
               <input placeholder="First Name" matInput type="text"
                      [formControl]="registerGroup.get('firstname')">
             </mat-form-field>
@@ -57,7 +55,7 @@
         <div class="row">
           <div class="col-8 offset-2">
             <mat-form-field>
-              <mat-label>Last Name</mat-label>
+              <mat-label>Lastname</mat-label>
               <input placeholder="Last Name" matInput type="text"
                      [formControl]="registerGroup.get('lastname')">
             </mat-form-field>
@@ -77,8 +75,8 @@
         <div class="row">
           <div class="col-8 offset-2">
             <mat-form-field>
-              <mat-label>Passwort</mat-label>
-              <input placeholder="Password" type="password" matInput
+              <mat-label>Password</mat-label>
+              <input placeholder="Password" type="text" matInput
                      [formControl]="registerGroup.get('password')">
             </mat-form-field>
           </div>
@@ -96,7 +94,7 @@
             <button mat-button
                     [disabled]="registerGroup.invalid"
                     (click)="register(); tabGroup.selectedIndex=0">
-              Registieren
+              Register
             </button>
           </div>
         </div>

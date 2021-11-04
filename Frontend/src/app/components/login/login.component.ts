@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {BehaviorSubject, EMPTY} from 'rxjs';
-import {UserService} from '../../services/user.service';
+import {AccountService} from '../../account/account.service';
 import {catchError} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {AccountModel} from '../../models/account.model';
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     // configService: ConfigService,
-    private userService: UserService,
+    private userService: AccountService,
     private router: Router,
     private fb: FormBuilder,
   ) {
@@ -40,37 +40,42 @@ export class LoginComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   login() {
-    this.userService.login(this.usernameControl.value, this.passwordControl.value)
+    this.loginError.next(false);
+    this.loginErrorMessage.next('');
+
+    this.userService.login({ username: this.usernameControl.value, password: this.passwordControl.value})
       .pipe(
         catchError((err: HttpErrorResponse) => {
         this.loginError.next(true);
-        this.loginErrorMessage.next(err.error);
+        this.loginErrorMessage.next(err.message);
         this.userService.isLoggedIn.next(false);
-        this.router.navigate(['']);
+        this.router.navigate(['/login']);
         return EMPTY;
       }))
       .subscribe((token: AccountModel) => {
 
-        console.log(token);
         this.loginError.next(false);
         this.loginErrorMessage.next('');
         this.userService.isLoggedIn.next(true);
         this.userService.currUser.next(token);
-        this.router.navigate(['/main']);
+        this.router.navigate(['/account']);
       });
   }
 
-  // tslint:disable-next-line:typedef
   register() {
-    this.userService.register(
-      this.registerGroup.value.firstname,
-      this.registerGroup.value.lastname,
-      this.registerGroup.value.username,
-      this.registerGroup.value.password
+    this.loginError.next(false);
+    this.loginErrorMessage.next('');
+
+    this.userService.register({
+        firstname: this.registerGroup.value.firstname,
+        lastname: this.registerGroup.value.lastname,
+        username: this.registerGroup.value.username,
+        password: this.registerGroup.value.password
+      }
     ).pipe(
         catchError((err: HttpErrorResponse) => {
       this.loginError.next(true);
-      this.loginErrorMessage.next(err.error);
+      this.loginErrorMessage.next(err.message);
       return EMPTY;
     }))
       .subscribe(() => {

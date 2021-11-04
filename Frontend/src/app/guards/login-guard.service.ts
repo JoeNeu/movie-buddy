@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {UserService} from '../services/user.service';
+import {AccountService} from '../account/account.service';
 import {EMPTY, Observable, of} from 'rxjs';
 import {first, switchMap} from 'rxjs/operators';
 
@@ -10,7 +10,7 @@ import {first, switchMap} from 'rxjs/operators';
 })
 export class IsLoggedInGuardService implements CanActivate {
 
-  constructor(private userService: UserService,
+  constructor(private userService: AccountService,
               private router: Router) {
   }
 
