@@ -1,1 +1,7 @@
-<p>home works!</p>
+<video autoplay [muted]=muted loop id="homeBackgroundVideo">
+  <source src="{{getRandomVideo()}}" type="video/mp4">
+</video>
+
+<div class="content">
+  <button (click)="muted = !muted" mat-button><mat-icon>volume_mute</mat-icon> Mute Video</button>
+</div>

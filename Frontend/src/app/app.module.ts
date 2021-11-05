@@ -44,7 +44,7 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
     SearchComponent,
     TrendingComponent,
     SocialComponent,
-    ScheduleComponent
+    ScheduleComponent,
   ],
   imports: [
     BrowserModule,
