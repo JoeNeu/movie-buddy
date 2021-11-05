@@ -18,7 +18,6 @@ export class AccountService {
 
   constructor(
     private http: HttpClient,
-    private tokenService: CoreSelectorService
   ) {
   this.commonHttpHeaders = new HttpHeaders()
       .set('Access-Control-Allow-Methods', ['POST', 'GET', 'DELETE', 'OPTIONS', 'PUT'])

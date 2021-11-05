@@ -14,7 +14,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
-import {GoogleMapsModule} from '@angular/google-maps';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from "@angular/material/core";
 import {EffectsModule} from "@ngrx/effects";
@@ -36,6 +35,7 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { InfoComponent } from './components/info/info.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {IvyCarouselModule} from "angular-responsive-carousel";
 
 @NgModule({
   declarations: [
@@ -65,7 +65,6 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatFormFieldModule,
     MatSelectModule,
     MatButtonModule,
-    GoogleMapsModule,
     MatDatepickerModule,
     MatNativeDateModule,
     EffectsModule.forRoot([AccountEffects]),
@@ -79,7 +78,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatToolbarModule,
     MatIconModule,
     MatCheckboxModule,
-
+    IvyCarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent],

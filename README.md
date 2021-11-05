@@ -20,6 +20,12 @@ IntelliJ: right click on pom -> +Add as Maven Project
 
 ### Movies
 
+Thanks to [The Movie Database](www.themoviedb.org), TMDB we can use their api to fetch movie data.
+
+Visit www.themoviedb.org to get more infos.
+
+![TMDB](https://www.themoviedb.org/assets/2/v4/logos/v2/blue_long_1-8ba2ac31f354005783fab473602c34c3f4fd207150182061e425d366e4f34596.svg "The Movie Database Api")
+
 ## Angular Frontend
 
 ### Installation
