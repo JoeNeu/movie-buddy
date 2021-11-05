@@ -1,8 +1,11 @@
+@import "../../../styles.scss";
+
 .sidenav-container {
   height: 100%;
 }
 
 .sidenav {
+  background: linear-gradient(to bottom left, $color-theme-main, $color-theme-background);
   width: 200px;
 }
 
@@ -10,8 +13,12 @@
   background: inherit;
 }
 
+.mat-list-base .mat-list-item {
+  color: white;
+}
+
 .mat-toolbar.mat-primary {
-  background: linear-gradient(180deg, #0030b3, #141414);
+  background: linear-gradient(to top left, $color-theme-main, $color-theme-background);
   position: sticky;
   top: 0;
   z-index: 1;
