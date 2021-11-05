@@ -16,7 +16,7 @@ export class AccountSelectorService {
   getAllAccountsFromStore(): Observable<AccountModel[]> {
     return this.store.pipe(
       select(createSelector(
-        fromRoot.getCarState, fromAccount.getAllAccounts())
+        fromRoot.accountState, fromAccount.getAllAccounts())
       )
     );
   }

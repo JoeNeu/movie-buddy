@@ -1,5 +1,5 @@
 import {createAction, props} from "@ngrx/store";
-import {AccountModel, LoginDto, RegisterDto} from "../../models/account.model";
+import {AccountModel, LoginDto, PasswordChangeDto, RegisterDto} from "../../models/account.model";
 
 
 export const LoginAction = createAction(
@@ -20,4 +20,24 @@ export const RegisterAction = createAction(
 export const RegisterActionSuccess = createAction(
   '[Account] Register Success',
   props<{account: AccountModel, route: string}>()
+);
+
+export const ChangePasswordAction = createAction(
+  '[Account] ChangePassword',
+  props<{passwordChangeDto: PasswordChangeDto}>()
+);
+
+export const ChangePasswordActionSuccess = createAction(
+  '[Account] ChangePassword Success',
+  props<{}>()
+);
+
+export const DeleteAccountAction = createAction(
+  '[Account] DeleteAccount',
+  props<{}>()
+);
+
+export const DeleteAccountActionSuccess = createAction(
+  '[Account] DeleteAccount Success',
+  props<{}>()
 );

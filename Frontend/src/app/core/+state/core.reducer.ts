@@ -29,11 +29,17 @@ const CoreReducer = createReducer(
       ...state,
       currentUser: account
     })),
+  on(accountAction.DeleteAccountActionSuccess,
+    (state, {}) => ({
+      ...state,
+      currentUser: null
+    })),
 );
 
 export const coreState = createFeatureSelector<CoreState>('core');
 export const getCurrentUser = createSelector(coreState, (state: CoreState) => state.currentUser);
 export const getCurrentUserToken = createSelector(coreState, (state: CoreState) => state.currentUser.token);
+export const getCurrentUserId = createSelector(coreState, (state: CoreState) => state.currentUser.id);
 export const isCurrentUserAdmin = createSelector(coreState, (state: CoreState) => state.currentUser.isAdministrator);
 
 export const getNextRoute = createSelector(coreState, (state: CoreState) => state.nextRoute)

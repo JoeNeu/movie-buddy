@@ -35,6 +35,7 @@ import { SocialComponent } from './components/social/social.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { InfoComponent } from './components/info/info.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -70,13 +71,14 @@ import { InfoComponent } from './components/info/info.component';
     EffectsModule.forRoot([AccountEffects]),
     [StoreModule.forRoot(reducers)],
     StoreDevtoolsModule.instrument({
-      name: 'CarShare',
+      name: 'MovieBuddy',
       maxAge: 25,
     }),
     MatSidenavModule,
     MatListModule,
     MatToolbarModule,
     MatIconModule,
+    MatCheckboxModule,
 
   ],
   providers: [],
