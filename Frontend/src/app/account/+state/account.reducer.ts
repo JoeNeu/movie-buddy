@@ -1,6 +1,6 @@
-import {createEntityAdapter, EntityAdapter, EntityState} from "@ngrx/entity";
-import {AccountModel} from "../../models/Account.model";
-import {Action, createReducer, on} from "@ngrx/store";
+import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
+import {AccountModel} from '../../models/account.model';
+import {Action, createReducer, on} from '@ngrx/store';
 
 import * as accountAction from './account.actions';
 
