@@ -11,8 +11,16 @@
 }
 
 .mat-toolbar.mat-primary {
-  background: #920000;
+  background: linear-gradient(180deg, #0030b3, rgba(255, 255, 255, 0));
   position: sticky;
   top: 0;
   z-index: 1;
+}
+
+#mainTitle {
+  font-family: "Bradley Hand ITC";
+  //font-family: "Arial Black";
+  font-style: oblique;
+  font-size: x-large;
+  margin-top: 5px;
 }
