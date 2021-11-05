@@ -33,6 +33,8 @@ import { SearchComponent } from './components/search/search.component';
 import { TrendingComponent } from './components/trending/trending.component';
 import { SocialComponent } from './components/social/social.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
+import { MessagesComponent } from './components/messages/messages.component';
+import { InfoComponent } from './components/info/info.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
     TrendingComponent,
     SocialComponent,
     ScheduleComponent,
+    MessagesComponent,
+    InfoComponent,
   ],
   imports: [
     BrowserModule,

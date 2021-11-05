@@ -8,6 +8,8 @@ import {ScheduleComponent} from "./components/schedule/schedule.component";
 import {SocialComponent} from "./components/social/social.component";
 import {SearchComponent} from "./components/search/search.component";
 import {TrendingComponent} from "./components/trending/trending.component";
+import {InfoComponent} from "./components/info/info.component";
+import {MessagesComponent} from "./components/messages/messages.component";
 
 const appRoutes: Routes = [
   {
@@ -36,6 +38,16 @@ const appRoutes: Routes = [
   {
     path: 'social',
     component: SocialComponent,
+    canActivate: [IsLoggedInGuardService]
+  },
+  {
+    path: 'info',
+    component: InfoComponent,
+    canActivate: [IsLoggedInGuardService]
+  },
+  {
+    path: 'message',
+    component: MessagesComponent,
     canActivate: [IsLoggedInGuardService]
   },
   {
