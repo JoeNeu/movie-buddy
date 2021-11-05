@@ -17,10 +17,7 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log("start")
-
     setTimeout(() => {
-      console.log("done")
       this.sidenav.toggle()
     }, 1000)
   }

@@ -1,30 +1,32 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {BehaviorSubject, EMPTY} from 'rxjs';
-import {AccountService} from '../../account/account.service';
-import {catchError} from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http';
-import {AccountModel} from '../../models/account.model';
-import {Router} from '@angular/router';
+import {BehaviorSubject, Subject} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Store} from "@ngrx/store";
+import {LoginAction, RegisterAction} from "../../account/+state/account.actions";
+import {takeUntil} from "rxjs/operators";
+import {MatTabChangeEvent} from "@angular/material/tabs";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 
   usernameControl = new FormControl('', [Validators.required]);
   passwordControl = new FormControl('', [Validators.required]);
   registerGroup: FormGroup;
-  loginError = new BehaviorSubject<boolean>(false);
-  loginErrorMessage = new BehaviorSubject<string>('');
+  @ViewChild('tabGroup') tabGroup;
+  currentTab: number;
+  nextPage: string;
+  private unsubscribe$ = new Subject();
 
   constructor(
-    // configService: ConfigService,
-    private userService: AccountService,
+    private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
+    private store: Store
   ) {
     this.registerGroup = this.fb.group({
       firstname: ['', Validators.required],
@@ -34,59 +36,57 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  isBlank(): boolean {
-    return this.usernameControl.invalid || this.passwordControl.invalid;
+  ngOnInit(): void {
+    this.route.queryParams.pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(params => {
+      this.nextPage = params['route'] || 'account';
+    })
   }
 
-  // tslint:disable-next-line:typedef
+  ngAfterViewInit() {
+    this.currentTab = this.tabGroup.selectedIndex;
+  }
+
+  public tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+    this.currentTab = tabChangeEvent.index;
+  }
+
+  isBlank(): boolean {
+    return (this.usernameControl.invalid || this.passwordControl.invalid)
+  }
+
+  submit() {
+    this.currentTab == 0 ? this.login() : this.register()
+  }
+
   login() {
-    this.loginError.next(false);
-    this.loginErrorMessage.next('');
-
-    this.userService.login({ username: this.usernameControl.value, password: this.passwordControl.value})
-      .pipe(
-        catchError((err: HttpErrorResponse) => {
-        this.loginError.next(true);
-        this.loginErrorMessage.next(err.message);
-        this.userService.isLoggedIn.next(false);
-        this.router.navigate(['/login']);
-        return EMPTY;
-      }))
-      .subscribe((token: AccountModel) => {
-
-        this.loginError.next(false);
-        this.loginErrorMessage.next('');
-        this.userService.isLoggedIn.next(true);
-        this.userService.currUser.next(token);
-        this.router.navigate(['/account']);
-      });
+    if(this.isBlank()) return
+    this.store.dispatch(LoginAction({
+      loginDto: {
+        username: this.usernameControl.value,
+        password: this.passwordControl.value
+      },
+      route: this.nextPage
+    }));
   }
 
   register() {
-    this.loginError.next(false);
-    this.loginErrorMessage.next('');
-
-    this.userService.register({
+    if(!this.registerGroup.invalid)
+    this.store.dispatch(RegisterAction({
+      registerDto: {
         firstname: this.registerGroup.value.firstname,
         lastname: this.registerGroup.value.lastname,
         username: this.registerGroup.value.username,
         password: this.registerGroup.value.password
-      }
-    ).pipe(
-        catchError((err: HttpErrorResponse) => {
-      this.loginError.next(true);
-      this.loginErrorMessage.next(err.message);
-      return EMPTY;
-    }))
-      .subscribe(() => {
-        this.loginError.next(false);
-        this.loginErrorMessage.next('');
-        this.router.navigate(['']);
-      });
+      },
+      route: this.nextPage
+    }));
   }
 
-
-  ngOnInit(): void {
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
 }

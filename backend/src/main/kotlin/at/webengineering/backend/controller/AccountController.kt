@@ -59,7 +59,8 @@ class AccountController(
     fun createAccount(@RequestBody accountCreation: AccountCreationDto): ResponseEntity<*> {
         return try {
             accountService.createAccount(accountCreation)
-            ResponseEntity.ok().body("")
+            val user = accountService.getUserDtoByUsername(accountCreation.username)
+            ResponseEntity.ok().body(user)
 
         } catch (e: UsernameAlreadyExistsException) {
             ResponseEntity(e.message, HttpStatus.BAD_REQUEST)

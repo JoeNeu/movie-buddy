@@ -31,8 +31,8 @@ export class AccountService {
     });
   }
 
-  register(registerDto: RegisterDto) {
-    return this.http.post(this.accountURL, registerDto, {
+  register(registerDto: RegisterDto): Observable<AccountModel> {
+    return this.http.post<AccountModel>(this.accountURL, registerDto, {
       headers: this.commonHttpHeaders
     });
   }

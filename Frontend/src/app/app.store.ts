@@ -1,15 +1,18 @@
 import {ActionReducerMap, createFeatureSelector, MetaReducer} from '@ngrx/store';
 import {storeFreeze} from 'ngrx-store-freeze';
 import * as fromAccount from './account/+state/account.reducer';
+import * as fromCore from './core/+state/core.reducer';
 import {environment} from "../environments/environment";
 
 export interface State {
-  car: fromAccount.AccountState;
+  account: fromAccount.AccountState;
+  core: fromCore.CoreState;
 }
 
 
 export const reducers: ActionReducerMap<State> = {
-  car: fromAccount.reducer
+  account: fromAccount.reducer,
+  core: fromCore.reducer
 };
 
 export const metaReducers: MetaReducer<State>[] = !(environment.production)
@@ -17,4 +20,4 @@ export const metaReducers: MetaReducer<State>[] = !(environment.production)
   : [];
 
 
-export const getCarState = createFeatureSelector<fromAccount.AccountState>('Account');
+export const accountState = createFeatureSelector<fromAccount.AccountState>('account');
