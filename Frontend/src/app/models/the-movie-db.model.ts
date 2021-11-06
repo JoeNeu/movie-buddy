@@ -19,5 +19,6 @@ export class tmdbMovie {
   popularity: number;
   vote_count: number;
   video: boolean;
-  vote_average: number
+  vote_average: number;
+  path: string;
 }

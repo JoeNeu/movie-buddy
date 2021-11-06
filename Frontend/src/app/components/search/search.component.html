@@ -1,12 +1,12 @@
-<div class="row demo-wrap">
+<div class="row search-bar-wrapper">
   <img
-    class="demo-bg"
+    class="search-bar-background"
     src="../../../assets/images/movie1.jpg"
     alt="search-input-background"
   >
 
-  <div class="col-4 demo-content">
-    <mat-form-field class="search-movie-input" appearance="fill">
+  <div class="col-4 search-bar-content">
+    <mat-form-field class="search-bar-input" appearance="fill">
       <mat-label>Movie / Series title</mat-label>
       <input matInput type="text" [(ngModel)]="movieSearchValue">
       <button *ngIf="movieSearchValue" matSuffix mat-icon-button aria-label="Clear" (click)="movieSearchValue=''">
@@ -15,3 +15,24 @@
     </mat-form-field>
   </div>
 </div>
+
+
+<div class="accordion-action-buttons">
+  <button mat-button (click)="accordion.openAll()">Expand All</button>
+  <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+</div>
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel *ngFor="let movie of movieSearchResult">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <img class="search-result-img" src="{{movie.path}}" alt="image of {{movie.original_title}}">
+      </mat-panel-title>
+      <mat-panel-description>
+        <h2 class="search-result-title">{{movie.original_title}} </h2>
+        <h2>({{movie.release_date}})</h2>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div>Rating: {{movie.vote_average}}</div>
+    <div>{{movie.overview}}</div>
+  </mat-expansion-panel>
+</mat-accordion>
