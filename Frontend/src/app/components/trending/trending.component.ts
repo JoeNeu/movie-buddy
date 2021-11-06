@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject} from "rxjs";
 import {MovieService} from "../../movies/movie.service";
 import {HttpHeaders} from "@angular/common/http";
@@ -13,17 +13,16 @@ export class TrendingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private unsubscribe$ = new Subject();
   commonHttpHeaders;
-  public images;
-  @ViewChild('tabGroup') tabGroup;
+  public images = [];
+  @ViewChild('tabGroup', {static: false}) tabGroup;
   private currentTab: number;
 
   constructor(
-    private movieService: MovieService
+    private movieService: MovieService,
   ) {
     this.commonHttpHeaders = new HttpHeaders()
       .set('Access-Control-Allow-Methods', ['POST', 'GET', 'DELETE', 'OPTIONS', 'PUT'])
       .set('Access-Control-Allow-Origin', '*');
-    this.images = []
   }
 
   ngAfterViewInit() {
@@ -45,7 +44,10 @@ export class TrendingComponent implements OnInit, AfterViewInit, OnDestroy {
     //   }
     // )
     this.images = data.results.map(obj => {
-      return {path: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + obj.poster_path}
+      return {
+        ...obj,
+        path: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + obj.poster_path
+      }
     })
   }
 

@@ -1,10 +1,10 @@
-<carousel
+<carousel #trendingCarousel
   [images]="images"
   [height]=450
   [cellWidth]=300
   [loop]=true
-  [lightDOM]=true
-  [overflowCellsLimit]="2"
+  [lightDOM]=false
+  [overflowCellsLimit]="4"
   [autoplay]=true
   [autoplayInterval]=3000
   [pauseOnHover]=true
@@ -13,13 +13,6 @@
 
 <mat-tab-group mat-align-tabs="center" #tabGroup (selectedTabChange)="tabChanged($event)">
   <mat-tab label="Most Popular right now">
-    <h2>:)</h2>
-    <div class="row">
-    </div>
-    <div class="row">
-    </div>
-    <div class="row">
-    </div>
   </mat-tab>
 
   <mat-tab label="Find out what's best for you">
@@ -30,30 +23,12 @@
         <input placeholder="Password" matInput type="password" [formControl]="">
       </mat-form-field>
     </div>
+
     <div class="row">
       <button mat-button type="submit">
         Submit
       </button>
     </div>
   </mat-tab>
-
-<!--  <mat-tab label="Delete">-->
-<!--    <div class="row">-->
-<!--      <h2>Delete Account</h2>-->
-<!--      <div class="col-8 offset-2">-->
-<!--        <mat-checkbox  [(ngModel)]="deleteAccountChecked">Do you really want to delete you account permanently?</mat-checkbox>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    <div class="row">-->
-<!--      <button mat-raised-button-->
-<!--              type="submit"-->
-<!--              color="warn"-->
-<!--              [disabled]="!deleteAccountChecked"-->
-<!--              (click)="deleteAccount();">-->
-<!--        Delete-->
-<!--      </button>-->
-<!--    </div>-->
-<!--  </mat-tab>-->
 
 </mat-tab-group>

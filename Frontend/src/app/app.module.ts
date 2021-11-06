@@ -78,7 +78,7 @@ import {IvyCarouselModule} from "angular-responsive-carousel";
     MatToolbarModule,
     MatIconModule,
     MatCheckboxModule,
-    IvyCarouselModule
+    IvyCarouselModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
