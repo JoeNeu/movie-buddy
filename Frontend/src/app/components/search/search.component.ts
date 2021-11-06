@@ -3,6 +3,7 @@ import {SearchService} from './search.service';
 import {MovieService} from '../../movies/movie.service';
 import {tmdbModel, tmdbMovie} from '../../models/the-movie-db.model';
 import {MatAccordion} from '@angular/material/expansion';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-search',
@@ -12,7 +13,9 @@ import {MatAccordion} from '@angular/material/expansion';
 export class SearchComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
-  movieSearchValue = 'Title';
+  searchControl = new FormControl('');
+
+  movieSearchValue = '';
   movieSearchResult: tmdbMovie[] = [];
 
   constructor(
@@ -22,16 +25,17 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.searchService.searchMovieTitle('asdf')
-    //   .toPromise()
-    //   .then((result) => console.log(result));
+  }
 
+  enterSubmit(event): void {
+    if (event.keyCode === 13) {
+      this.submitForm();
+    }
+  }
 
-    this.movieService.getSearchResult('test')
+  submitForm(): void {
+    this.movieService.getSearchResult(this.movieSearchValue)
       .subscribe((data: tmdbModel) => {
-          console.log(data.results);
-          console.log(this.movieSearchResult);
-
           this.movieSearchResult = data.results.map((obj) => {
             return {
               ...obj,
@@ -40,8 +44,6 @@ export class SearchComponent implements OnInit {
           });
         }
       );
-
   }
-
 
 }
