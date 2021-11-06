@@ -1,1 +1,17 @@
-<p>search works!</p>
+<div class="row demo-wrap">
+  <img
+    class="demo-bg"
+    src="../../../assets/images/movie1.jpg"
+    alt="search-input-background"
+  >
+
+  <div class="col-4 demo-content">
+    <mat-form-field class="search-movie-input" appearance="fill">
+      <mat-label>Movie / Series title</mat-label>
+      <input matInput type="text" [(ngModel)]="movieSearchValue">
+      <button *ngIf="movieSearchValue" matSuffix mat-icon-button aria-label="Clear" (click)="movieSearchValue=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</div>

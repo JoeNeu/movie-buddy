@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
+  movieSearchValue = 'Title';
+
   constructor() { }
 
   ngOnInit(): void {
   }
+
+
 
 }

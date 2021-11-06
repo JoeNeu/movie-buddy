@@ -1,0 +1,28 @@
+
+.demo-wrap {
+  overflow: hidden;
+  position: relative;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.demo-bg {
+  opacity: 0.8;
+  position: absolute;
+  left: 0;
+  top: -50%;
+  height: auto;
+  filter: blur(6px);
+}
+
+.demo-content {
+  position: relative;
+  background: white;
+  height: 50px;
+}
+
+.search-movie-input {
+  width: 100%;
+}
