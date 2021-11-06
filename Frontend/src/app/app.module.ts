@@ -36,6 +36,9 @@ import { MessagesComponent } from './components/messages/messages.component';
 import { InfoComponent } from './components/info/info.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {IvyCarouselModule} from "angular-responsive-carousel";
+import {CarouselModule} from "primeng/carousel";
+import {ButtonModule} from "primeng/button";
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
   declarations: [
@@ -79,6 +82,9 @@ import {IvyCarouselModule} from "angular-responsive-carousel";
     MatIconModule,
     MatCheckboxModule,
     IvyCarouselModule,
+    CarouselModule,
+    ButtonModule,
+    ToastModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,5 +1,5 @@
 <carousel #trendingCarousel
-  [images]="images"
+  [images]="trendingImages"
   [height]=450
   [cellWidth]=300
   [loop]=true
@@ -13,6 +13,22 @@
 
 <mat-tab-group mat-align-tabs="center" #tabGroup (selectedTabChange)="tabChanged($event)">
   <mat-tab label="Most Popular right now">
+    <p-carousel [value]="popularImages" [numVisible]="2" [numScroll]="1" [circular]="true">
+      <ng-template let-movie pTemplate="item">
+        <div class="product-item">
+          <div class="product-item-content">
+            <div class="p-mb-3">
+              <h2 class="p-mb-1">{{movie.original_title}} - Rating: {{movie.vote_average}}</h2>
+              <img src="{{movie.path}}">
+            </div>
+            <div>
+              <h4 class="p-mb-1">Release Date: {{movie.release_date}}</h4>
+            </div>
+            <h3 class="p-mb-1">{{movie.overview}}</h3>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
   </mat-tab>
 
   <mat-tab label="Find out what's best for you">

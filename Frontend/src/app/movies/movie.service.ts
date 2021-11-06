@@ -22,7 +22,7 @@ export class MovieService {
   }
 
   getPopularMovies(): Observable<tmdbModel> {
-    return this.http.get<tmdbModel>(`${this.themoviedbUrl}/movie/popular?apiKey=${this.themoviedbApiKey}&language=en-US&page=1`);
+    return this.http.get<tmdbModel>(`${this.themoviedbUrl}/movie/popular?api_key=${this.themoviedbApiKey}&language=en-US&page=1`);
   }
 
   getTrendingMovies(): Observable<tmdbModel> {

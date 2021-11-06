@@ -1,0 +1,19 @@
+@import "../../../styles.scss";
+
+.product-item {
+  .product-item-content {
+    border-radius: 3px;
+    margin: .3rem;
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .product-image {
+    width: 50%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+  }
+}
+
+.p-carousel-prev .p-carousel-next {
+  background: $color-theme-main;
+}
