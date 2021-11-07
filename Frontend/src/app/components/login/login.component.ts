@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
         username: "admin",
         password: "admin"
       },
-      route: "social"
+      route: "account"
     }));
   }
 

@@ -42,6 +42,8 @@ import {ButtonModule} from "primeng/button";
 import {ToastModule} from "primeng/toast";
 import { TextFilterPipe } from './pipes/textFilter.pipe';
 import {SocialEffects} from "./social/+state/social.effects";
+import { MovieCardComponent } from './components/shared/movie-card/movie-card.component';
+import { ShowCardComponent } from './components/shared/show-card/show-card.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import {SocialEffects} from "./social/+state/social.effects";
     MessagesComponent,
     InfoComponent,
     TextFilterPipe,
+    MovieCardComponent,
+    ShowCardComponent,
   ],
   imports: [
     BrowserModule,

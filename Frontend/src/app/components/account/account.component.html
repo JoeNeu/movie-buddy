@@ -1,44 +1,47 @@
 <mat-tab-group mat-align-tabs="left" #tabGroup (selectedTabChange)="tabChanged($event)">
-  <mat-tab label="Profile">
-    <h1>Hello, {{currentUser.firstname}} :)</h1>
-    <div class="row">
-      Username: {{currentUser.username}}
-    </div>
-    <div class="row">
+  <div class="container">
+    <mat-tab label="Profile">
+      <h1>Hello, {{currentUser.firstname}} :)</h1>
+      <div class="row">
+        Username: {{currentUser.username}}
+      </div>
+      <div class="row">
         Firstname: {{currentUser.firstname}}
-    </div>
-    <div class="row">
+      </div>
+      <div class="row">
         Lastname: {{currentUser.lastname}}
-    </div>
-  </mat-tab>
-
-  <mat-tab label="Edit">
-    <div class="row">
-      <h2>Change Password</h2>
+      </div>
+    </mat-tab>
+  </div>
+  <div class="container">
+    <mat-tab label="Edit">
+      <div class="row">
+        <h2>Change Password</h2>
         <mat-form-field>
           <mat-label>New Password</mat-label>
           <input placeholder="Password" matInput type="password" [formControl]="passwordControl">
         </mat-form-field>
       </div>
-    <div class="row">
+      <div class="row">
         <button mat-button
                 type="submit"
                 [disabled]="passwordControl.invalid"
                 (click)="changePassword(); tabGroup.selectedIndex=0">
           Submit
         </button>
-    </div>
-  </mat-tab>
-
-  <mat-tab label="Delete">
-    <div class="row">
-      <h2>Delete Account</h2>
-      <div class="col-8 offset-2">
-        <mat-checkbox  [(ngModel)]="deleteAccountChecked">Do you really want to delete you account permanently?</mat-checkbox>
       </div>
-    </div>
+    </mat-tab>
+  </div>
+  <div class="container">
+    <mat-tab label="Delete">
+      <div class="row">
+        <h2>Delete Account</h2>
+        <div class="col-8 offset-2">
+          <mat-checkbox  [(ngModel)]="deleteAccountChecked">Do you really want to delete you account permanently?</mat-checkbox>
+        </div>
+      </div>
 
-    <div class="row">
+      <div class="row">
         <button mat-raised-button
                 type="submit"
                 color="warn"
@@ -46,8 +49,8 @@
                 (click)="deleteAccount();">
           Delete
         </button>
-    </div>
-  </mat-tab>
-
+      </div>
+    </mat-tab>
+  </div>
 </mat-tab-group>
 
