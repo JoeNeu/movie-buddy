@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MovieService} from '../../movies/movie.service';
-import {tmdbModel, tmdbMovie, tmdbTvShow} from '../../models/the-movie-db.model';
+import {tmdbModel} from '../../models/the-movie-db.model';
 import {MatAccordion} from '@angular/material/expansion';
 import {FormControl} from '@angular/forms';
 

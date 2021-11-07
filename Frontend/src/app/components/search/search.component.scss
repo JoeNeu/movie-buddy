@@ -27,6 +27,31 @@
   width: 100%;
 }
 
+.rating-text {
+  padding: 0 24px;
+}
+
+
+/*** CARD ***/
+
+mat-card {
+  margin-bottom: 20px;
+}
+
+.card-image {
+  width: 150px;
+}
+
+.card-heading {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+mat-card-title {
+  justify-content: center;
+  display: flex;
+}
 
 /*** ACCORDION ***/
 
@@ -45,6 +70,10 @@
 .example-headers-align .mat-expansion-panel-header-description {
   justify-content: space-between;
   align-items: center;
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+  box-shadow: none;
 }
 
 mat-expansion-panel-header {
