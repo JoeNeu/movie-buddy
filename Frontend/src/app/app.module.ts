@@ -23,9 +23,10 @@ import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {AccountEffects} from "./account/+state/account.effects";
 import {NavbarComponent} from "./components/navbar/navbar.component";
 import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatListModule} from "@angular/material/list";
+import {MatListModule} from '@angular/material/list';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
+import {MatExpansionModule} from '@angular/material/expansion';
 import { AccountComponent } from './components/account/account.component';
 import { HomeComponent } from './components/home/home.component';
 import { SearchComponent } from './components/search/search.component';
@@ -84,6 +85,7 @@ import {SocialEffects} from "./social/+state/social.effects";
     MatToolbarModule,
     MatIconModule,
     MatCheckboxModule,
+    MatExpansionModule,
     IvyCarouselModule,
     CarouselModule,
     ButtonModule,

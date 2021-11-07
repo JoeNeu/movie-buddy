@@ -1,0 +1,90 @@
+
+.search-bar-wrapper {
+  overflow: hidden;
+  position: relative;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar-background {
+  opacity: 0.8;
+  position: absolute;
+  left: 0;
+  top: -50%;
+  height: auto;
+  filter: blur(6px);
+}
+
+.search-bar-content {
+  position: relative;
+  background: white;
+  height: 50px;
+}
+
+.search-bar-input {
+  width: 100%;
+}
+
+.rating-text {
+  padding: 0 24px;
+}
+
+
+/*** CARD ***/
+
+mat-card {
+  margin-bottom: 20px;
+}
+
+.card-image {
+  height: 100%;
+}
+
+.card-heading {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+mat-card-title {
+  justify-content: center;
+  display: flex;
+}
+
+/*** ACCORDION ***/
+
+.search-result-title {
+  margin: 0;
+}
+
+.search-result-img {
+  height: 100px;
+}
+
+.accordion-action-buttons {
+  padding-bottom: 20px;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+  box-shadow: none;
+}
+
+mat-expansion-panel-header {
+  height: 150px;
+
+  &.mat-expanded {
+    height: 200px;
+  }
+}
+
+.mat-expansion-panel-header-title {
+  flex-grow: 0.2;
+}
+
