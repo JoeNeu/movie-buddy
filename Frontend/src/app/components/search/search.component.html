@@ -57,7 +57,7 @@
   <div class="col-md-4" *ngFor="let show of tvShowSearchResult">
     <mat-card class="example-card">
       <mat-card-header class="card-heading">
-        <mat-card-title>{{show.ne}}</mat-card-title>
+        <mat-card-title>{{show.name}}</mat-card-title>
         <mat-card-subtitle><h2>({{show.first_air_date}})</h2></mat-card-subtitle>
         <div><img mat-card-image class="card-image" src="{{show.path}}" alt="image of {{show.name}}"></div>
         <div class="rating-text">Rating: {{show.vote_average}}</div>
