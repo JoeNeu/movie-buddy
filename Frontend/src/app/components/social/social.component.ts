@@ -2,11 +2,13 @@ import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/c
 import {AccountModel} from "../../models/account.model";
 import {select, Store} from "@ngrx/store";
 import {GetAllAccountsAction} from "../../account/+state/account.actions";
-import {Subject} from "rxjs";
+import {combineLatest, Subject} from "rxjs";
 import {AccountSelectorService} from "../../account/account-selector.service";
 import {MatTabChangeEvent} from "@angular/material/tabs";
-import {switchMap, takeUntil} from "rxjs/operators";
+import {concatMap, switchMap, takeUntil} from "rxjs/operators";
 import {getCurrentUser} from "../../core/+state/core.reducer";
+import {AddFriendAction, DeleteFriendAction} from "../../social/+state/social.actions";
+import {SocialSelectorService} from "../../social/social-selector.service";
 
 @Component({
   selector: 'app-social',
@@ -16,27 +18,41 @@ import {getCurrentUser} from "../../core/+state/core.reducer";
 export class SocialComponent implements OnInit, AfterViewInit, OnDestroy {
 
   allAccounts: AccountModel[];
+  friendsAccounts: AccountModel[];
   private unsubscribe$ = new Subject();
   @ViewChild('tabGroup', {static: false}) tabGroup;
   private currentTab: number;
-  searchText: string;
+  searchTextUser: string;
+  searchTextFriend: string;
+
+  displayedColumns: string[] = ['position', 'username', 'firstname', 'lastname'];
 
   constructor(
     private store: Store,
-    private accountSelectorService: AccountSelectorService
-  ) { }
+    private accountSelectorService: AccountSelectorService,
+    private socialSelectorService: SocialSelectorService,
+  ) {
+  }
 
   ngOnInit(): void {
     this.store.dispatch(GetAllAccountsAction());
     this.store.pipe(
       takeUntil(this.unsubscribe$),
       select(getCurrentUser),
-      switchMap((account: AccountModel) => {
-        return this.accountSelectorService.getAllOtherAccountsFromStore(account.id)
+      concatMap((account: AccountModel) => {
+        return combineLatest(
+          this.accountSelectorService.getAllOtherAccountsFromStore(account.id),
+          this.socialSelectorService.getAllFriendsFromStore()
+        )
       })
-    ).subscribe( (accounts: AccountModel[]) =>
-      this.allAccounts = accounts
-    )
+    ).subscribe(([accounts, friends]: [AccountModel[], AccountModel[]]) => {
+        console.log("f", friends)
+        this.allAccounts = accounts.filter(account => !friends.map(friend => friend.id).includes(account.id));
+        console.log("a", this.allAccounts)
+
+        this.friendsAccounts = friends;
+      }
+    );
   }
 
   ngAfterViewInit() {
@@ -45,6 +61,14 @@ export class SocialComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     this.currentTab = tabChangeEvent.index;
+  }
+
+  addFriend(account: AccountModel) {
+    this.store.dispatch(AddFriendAction({account}));
+  }
+
+  deleteFriend(account: AccountModel) {
+    this.store.dispatch(DeleteFriendAction({id: account.id}));
   }
 
   ngOnDestroy() {

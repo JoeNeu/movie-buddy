@@ -40,6 +40,7 @@ import {CarouselModule} from "primeng/carousel";
 import {ButtonModule} from "primeng/button";
 import {ToastModule} from "primeng/toast";
 import { TextFilterPipe } from './pipes/textFilter.pipe';
+import {SocialEffects} from "./social/+state/social.effects";
 
 @NgModule({
   declarations: [
@@ -72,7 +73,7 @@ import { TextFilterPipe } from './pipes/textFilter.pipe';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    EffectsModule.forRoot([AccountEffects]),
+    EffectsModule.forRoot([AccountEffects, SocialEffects]),
     [StoreModule.forRoot(reducers)],
     StoreDevtoolsModule.instrument({
       name: 'MovieBuddy',

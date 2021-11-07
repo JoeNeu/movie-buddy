@@ -54,4 +54,22 @@ export class AccountService {
       headers: this.commonHttpHeaders.append('token', token)
     });
   }
+
+  getAllFriends(token: string): Observable<AccountModel[]> {
+    return this.http.get<AccountModel[]>(this.accountURL + '/friends', {
+      headers: this.commonHttpHeaders.append('token', token)
+    });
+  }
+
+  addFriend(id: string, token: string) {
+    return this.http.put(this.accountURL + '/friends/add', id ,{
+      headers: this.commonHttpHeaders.append('token', token)
+    });
+  }
+
+  removeFriend(id: string, token: string) {
+    return this.http.put(this.accountURL + '/friends/remove', id ,{
+      headers: this.commonHttpHeaders.append('token', token)
+    });
+  }
 }

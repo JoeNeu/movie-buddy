@@ -136,7 +136,7 @@ class AccountController(
         }
     }
 
-    @GetMapping("/friends/add")
+    @PutMapping("/friends/add")
     fun addFriend(
         @RequestHeader("token") token: String,
         @RequestBody id: String
@@ -151,7 +151,6 @@ class AccountController(
         } catch (e: AccountNotFoundException) {
             throw ResponseStatusException(HttpStatus.FORBIDDEN, e.message)
         } catch (e: Exception) {
-            println(e)
             throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.message)
         }
     }

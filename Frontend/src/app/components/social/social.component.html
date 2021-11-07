@@ -1,15 +1,15 @@
 <mat-tab-group mat-align-tabs="left" #tabGroup (selectedTabChange)="tabChanged($event)">
   <mat-tab label="Add Friends">
     <div class="container">
-      <h2 class="py-4">Search for other Users</h2>
-
-      <div class="form-group mb-4">
-        <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Username">
+      <h2>Search for other Users</h2>
+      <div class="form-group">
+        <input class="form-control" type="text" [(ngModel)]="searchTextUser" placeholder="Search">
       </div>
 
-      <table class="table" *ngIf="(allAccounts | textFilter: searchText).length > 0; else noResults">
+      <table class="table" *ngIf="(allAccounts | textFilter: searchTextUser).length > 0; else noResults">
         <colgroup>
           <col width="5%">
+          <col width="*">
           <col width="*">
           <col width="35%">
         </colgroup>
@@ -17,23 +17,64 @@
         <tr>
           <th scope="col"></th>
           <th scope="col">Username</th>
+          <th scope="col">Name</th>
           <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let account of allAccounts | textFilter: searchText; let i = index">
-
+        <tr *ngFor="let account of allAccounts | textFilter: searchTextUser; let i = index">
           <th scope="row" *ngIf="i<5">{{i + 1}}</th>
           <td *ngIf="i<5">{{account.username}}</td>
-          <td *ngIf="i<5"><button mat-raised-button color="primary" id="addFriendButton"> Follow {{account.firstname}}</button></td>
-
+          <td *ngIf="i<5">{{account.firstname}} {{account.lastname}}</td>
+          <td *ngIf="i<5">
+            <button mat-raised-button color="primary" class="friendButton" (click)="addFriend(account)"> Follow</button>
+          </td>
+          <th scope="row" *ngIf="i==6">...</th>
+          <td *ngIf="i==6">Use Search for more</td>
         </tr>
         </tbody>
       </table>
 
       <ng-template #noResults>
-        <p>No results found for "{{searchText}}".</p>
+        <p>No results.</p>
       </ng-template>
+    </div>
+
+    <div class="container">
+      <h2>Friends</h2>
+
+      <div class="form-group">
+        <input class="form-control" type="text" [(ngModel)]="searchTextFriend" placeholder="Search">
+      </div>
+
+      <table class="table" *ngIf="(friendsAccounts | textFilter: searchTextFriend).length > 0; else noResults">
+        <colgroup>
+          <col width="5%">
+          <col width="*">
+          <col width="*">
+          <col width="35%">
+        </colgroup>
+        <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Username</th>
+          <th scope="col">Name</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let account of friendsAccounts | textFilter: searchTextFriend; let i = index">
+          <th scope="row" *ngIf="i<5">{{i + 1}}</th>
+          <td *ngIf="i<5">{{account.username}}</td>
+          <td *ngIf="i<5">{{account.firstname}} {{account.lastname}}</td>
+          <td *ngIf="i<5">
+            <button mat-raised-button color="warn" class="friendButton" (click)="deleteFriend(account)"> Unfollow</button>
+          </td>
+          <th scope="row" *ngIf="i==6">...</th>
+          <td *ngIf="i==6">Use Search for more</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </mat-tab>
 

@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {Actions, Effect, ofType} from "@ngrx/effects";
 
 import * as accountActions from "./account.actions"
+import * as socialActions from "../../social/+state/social.actions"
 import {AccountService} from "../account.service";
 import {combineLatest, EMPTY, Observable} from "rxjs";
 import {Action, select, Store} from "@ngrx/store";
@@ -81,6 +82,8 @@ export class AccountEffects {
   readonly loginOrRegisterRequestSuccess$: Observable<Action> = this.actions$.pipe(
     ofType(accountActions.LoginActionSuccess, accountActions.RegisterActionSuccess),
     tap(() => {
+      this.store.dispatch(socialActions.GetAllFriendsAction());
+
       this.store.pipe(select(getNextRoute), first()).subscribe( route =>
       this.router.navigate([route])
       )
