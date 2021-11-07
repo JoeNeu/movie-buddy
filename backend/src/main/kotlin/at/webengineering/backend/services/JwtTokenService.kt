@@ -18,22 +18,24 @@ import java.util.*
 
 @Service
 class JwtTokenService(
-        private val accountRepository: IAccountRepository
+    private val accountRepository: IAccountRepository
 ) {
 
     @Value("\${token.privateKey}")
     val privateKey: String? = null
+
     @Value("\${token.issuer}")
     val issuer: String? = null
+
     @Value("\${token.expirationTime}")
     val expirationTime: Long = 0
 
     fun buildJwt(uuid: UUID): String {
         val signer: Signer = HMACSigner.newSHA256Signer(privateKey)
         val jwt = JWT().setIssuer(issuer)
-                .setIssuedAt(ZonedDateTime.now(ZoneOffset.UTC))
-                .setSubject(uuid.toString())
-                .setExpiration(ZonedDateTime.now(ZoneOffset.UTC).plusMinutes(expirationTime))
+            .setIssuedAt(ZonedDateTime.now(ZoneOffset.UTC))
+            .setSubject(uuid.toString())
+            .setExpiration(ZonedDateTime.now(ZoneOffset.UTC).plusMinutes(expirationTime))
         return JWT.getEncoder().encode(jwt, signer)
     }
 
@@ -49,12 +51,12 @@ class JwtTokenService(
     fun validateUserToken(token: String, username: String) {
         val jwt = recoverJWT(token)
         val uuid = accountRepository.findAccountByUsername(username).let { account -> account?.id.toString() }
-        if(jwt.subject != uuid) throw TokenNotValidException()
+        if (jwt.subject != uuid) throw TokenNotValidException()
     }
 
     fun getAccountFromToken(token: String): Account {
         val jwt = recoverJWT(token)
-        return accountRepository.findByIdOrNull( UUID.fromString(jwt.subject))
-                ?: throw AccountNotFoundException()
+        return accountRepository.findByIdOrNull(UUID.fromString(jwt.subject))
+            ?: throw AccountNotFoundException()
     }
 }

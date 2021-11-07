@@ -25,5 +25,8 @@ data class Account (
     var lastname: String,
 
     @Column(nullable = false)
-    var isAdministrator: Boolean
+    var isAdministrator: Boolean,
+
+    @ElementCollection
+    var friends: MutableList<UUID>
 )

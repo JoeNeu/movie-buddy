@@ -12,7 +12,7 @@ import org.springframework.context.event.EventListener
 
 @SpringBootApplication
 class BackendApplication(
-        private val accountService: AccountService
+    private val accountService: AccountService
 ) {
     val logger: Logger = LoggerFactory.getLogger(BackendApplication::class.java)
 
@@ -22,12 +22,12 @@ class BackendApplication(
             if (accountService.findAll().isEmpty()) {
                 logger.info("Add Administrator")
                 accountService.createAdministrator(
-                        AccountCreationDto(
-                                username = "admin",
-                                password = "admin",
-                                firstname = "firstname",
-                                lastname = "lastname"
-                        )
+                    AccountCreationDto(
+                        username = "admin",
+                        password = "admin",
+                        firstname = "firstname",
+                        lastname = "lastname"
+                    )
                 )
             }
         } catch (e: Exception) {

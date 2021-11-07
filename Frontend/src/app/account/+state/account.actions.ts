@@ -29,15 +29,21 @@ export const ChangePasswordAction = createAction(
 
 export const ChangePasswordActionSuccess = createAction(
   '[Account] ChangePassword Success',
-  props<{}>()
 );
 
 export const DeleteAccountAction = createAction(
   '[Account] DeleteAccount',
-  props<{}>()
 );
 
 export const DeleteAccountActionSuccess = createAction(
   '[Account] DeleteAccount Success',
-  props<{}>()
+);
+
+export const GetAllAccountsAction = createAction(
+  '[Accounts] Get all Accounts',
+);
+
+export const GetAllAccountsActionSuccess = createAction(
+  '[Accounts] Get all Accounts Success',
+  props<{accounts: AccountModel[]}>()
 );

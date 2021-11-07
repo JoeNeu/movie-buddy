@@ -48,4 +48,10 @@ export class AccountService {
       headers: this.commonHttpHeaders.append('token', token)
     });
   }
+
+  getAllAccounts(token: string): Observable<AccountModel[]> {
+    return this.http.get<AccountModel[]>(this.accountURL, {
+      headers: this.commonHttpHeaders.append('token', token)
+    });
+  }
 }

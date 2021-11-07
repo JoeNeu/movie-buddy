@@ -26,6 +26,26 @@ export class AccountEffects {
   }
 
   @Effect()
+  readonly loadAllAccounts$: Observable<Action> = this.actions$.pipe(
+    ofType(accountActions.GetAllAccountsAction),
+    exhaustMap(({}) => {
+      return this.coreSelectorService.getCurrentUserToken().pipe(
+        switchMap((token: string) => {
+          return this.accountService.getAllAccounts(token).pipe(
+            map((accounts: AccountModel[]) => {
+              return accountActions.GetAllAccountsActionSuccess({accounts})
+            }),
+            catchError(err => {
+              console.warn(err);
+              return EMPTY
+            })
+          );
+        })
+      )
+    })
+  );
+
+  @Effect()
   readonly loginRequest$: Observable<Action> = this.actions$.pipe(
     ofType(accountActions.LoginAction),
     exhaustMap(({loginDto, route}) => {
@@ -75,7 +95,7 @@ export class AccountEffects {
         switchMap((token: string) => {
           return this.accountService.changePassword(passwordChangeDto, token).pipe(
             map(() => {
-              return accountActions.ChangePasswordActionSuccess({})
+              return accountActions.ChangePasswordActionSuccess()
             }),
             catchError(err => {
               console.warn(err);
@@ -98,7 +118,7 @@ export class AccountEffects {
         switchMap(([token, id]) => {
           return this.accountService.deleteAccount(id, token).pipe(
             map(_ => {
-              return accountActions.DeleteAccountActionSuccess({})
+              return accountActions.DeleteAccountActionSuccess()
             }),
             catchError(err => {
               console.warn(err);

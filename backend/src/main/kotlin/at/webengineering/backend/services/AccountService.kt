@@ -16,8 +16,8 @@ import java.util.*
 
 @Service
 class AccountService(
-        private val accountRepository: IAccountRepository,
-        private val accountMapper: AccountMapper
+    private val accountRepository: IAccountRepository,
+    private val accountMapper: AccountMapper
 ) {
 
     val logger: Logger = LoggerFactory.getLogger(AccountService::class.java)
@@ -36,7 +36,7 @@ class AccountService(
 
     fun changePassword(passwordChangeDto: PasswordChangeDto) {
         val account = accountRepository.findAccountByUsername(passwordChangeDto.username)
-                ?: throw NullPointerException()
+            ?: throw NullPointerException()
 
         account.password = hash(passwordChangeDto.newPassword)
         accountRepository.save(account).also {
@@ -61,21 +61,21 @@ class AccountService(
         }
     }
 
-    fun deleteAccountByUsername(username: String){
+    fun deleteAccountByUsername(username: String) {
         accountRepository.deleteAccountByUsername(username).also {
             logger.info("Deleted Account with Username: ${username}")
         }
     }
 
-    fun findAll(): List<AccountDto> = accountRepository.findAll().map{ account -> accountMapper.toDto(account)}
+    fun findAll(): List<AccountDto> = accountRepository.findAll().map { account -> accountMapper.toDto(account) }
 
     fun findOne(id: UUID): AccountDto {
-        return accountRepository.findById(id).map{ account: Account -> accountMapper.toDto(account)}.get()
+        return accountRepository.findById(id).map { account: Account -> accountMapper.toDto(account) }.get()
     }
 
     fun getUserDtoByUsername(username: String): AccountDto {
         return accountMapper.mapToDtoAndGenerateJwt(
-                accountRepository.findAccountByUsername(username) ?: throw NullPointerException()
+            accountRepository.findAccountByUsername(username) ?: throw NullPointerException()
         )
     }
 
@@ -91,5 +91,20 @@ class AccountService(
         }
     }
 
-    private fun usernameAlreadyExists(username: String): Boolean = accountRepository.findAccountByUsername(username) != null
+    private fun usernameAlreadyExists(username: String): Boolean =
+        accountRepository.findAccountByUsername(username) != null
+
+    fun addFriend(account: Account, id: UUID) {
+        account.friends.add(id)
+        accountRepository.save(account)
+    }
+
+    fun removeFriend(account: Account, id: UUID) {
+        account.friends.remove(id)
+        accountRepository.save(account)
+    }
+
+    fun getAllFriends(account: Account): List<AccountDto> {
+        return accountRepository.findAllById(account.friends).map { acc -> accountMapper.toDto(acc) }
+    }
 }

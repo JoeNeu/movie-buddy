@@ -9,39 +9,40 @@ import org.springframework.stereotype.Service
 
 @Service
 class AccountMapper(
-        val jwtTokenService: JwtTokenService
+    val jwtTokenService: JwtTokenService
 ) {
 
     fun mapToEntityAndHashPassword(accountCreationDto: AccountCreationDto): Account {
         return Account(
-                id = null,
-                username = accountCreationDto.username,
-                password = hash(accountCreationDto.password),
-                firstname = accountCreationDto.firstname,
-                lastname = accountCreationDto.lastname,
-                isAdministrator = false
+            id = null,
+            username = accountCreationDto.username,
+            password = hash(accountCreationDto.password),
+            firstname = accountCreationDto.firstname,
+            lastname = accountCreationDto.lastname,
+            isAdministrator = false,
+            friends = mutableListOf()
         )
     }
 
     fun mapToDtoAndGenerateJwt(account: Account): AccountDto {
         return AccountDto(
-                account.id ?: throw java.lang.NullPointerException(),
-                account.username,
-                account.firstname,
-                account.lastname,
-                jwtTokenService.buildJwt(account.id ?: throw NullPointerException("account_id should never be null")),
-                account.isAdministrator
+            account.id ?: throw java.lang.NullPointerException(),
+            account.username,
+            account.firstname,
+            account.lastname,
+            jwtTokenService.buildJwt(account.id ?: throw NullPointerException("account_id should never be null")),
+            account.isAdministrator
         )
     }
 
     fun toDto(account: Account): AccountDto {
         return AccountDto(
-                account.id ?: throw java.lang.NullPointerException(),
-                account.username,
-                account.firstname,
-                account.lastname,
-                null,
-                account.isAdministrator
+            account.id ?: throw java.lang.NullPointerException(),
+            account.username,
+            account.firstname,
+            account.lastname,
+            null,
+            account.isAdministrator
         )
     }
 }

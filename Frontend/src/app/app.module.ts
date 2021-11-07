@@ -39,6 +39,7 @@ import {IvyCarouselModule} from "angular-responsive-carousel";
 import {CarouselModule} from "primeng/carousel";
 import {ButtonModule} from "primeng/button";
 import {ToastModule} from "primeng/toast";
+import { TextFilterPipe } from './pipes/textFilter.pipe';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import {ToastModule} from "primeng/toast";
     ScheduleComponent,
     MessagesComponent,
     InfoComponent,
+    TextFilterPipe,
   ],
   imports: [
     BrowserModule,

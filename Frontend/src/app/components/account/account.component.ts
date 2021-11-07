@@ -57,7 +57,7 @@ export class AccountComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   deleteAccount() {
-    this.store.dispatch(DeleteAccountAction({}))
+    this.store.dispatch(DeleteAccountAction())
   }
 
   ngOnDestroy() {
