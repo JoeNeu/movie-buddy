@@ -4,7 +4,7 @@ import {Actions, Effect, ofType} from "@ngrx/effects";
 import * as accountActions from "./account.actions"
 import * as socialActions from "../../social/+state/social.actions"
 import {AccountService} from "../account.service";
-import {combineLatest, EMPTY, Observable} from "rxjs";
+import {EMPTY, Observable, zip} from "rxjs";
 import {Action, select, Store} from "@ngrx/store";
 import {catchError, exhaustMap, first, map, switchMap, tap} from "rxjs/operators";
 import {AccountModel} from "../../models/account.model";
@@ -114,7 +114,7 @@ export class AccountEffects {
   readonly deleteAccountRequest$: Observable<Action> = this.actions$.pipe(
     ofType(accountActions.DeleteAccountAction),
     exhaustMap(() => {
-      return combineLatest(
+      return zip(
         this.coreSelectorService.getCurrentUserToken(),
         this.coreSelectorService.getCurrentUserId()
       ).pipe(

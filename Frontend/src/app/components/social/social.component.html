@@ -1,9 +1,8 @@
 <mat-tab-group mat-align-tabs="left" #tabGroup (selectedTabChange)="tabChanged($event)">
   <mat-tab label="Add Friends">
     <div class="container">
-      <h2>Search for other Users</h2>
       <div class="form-group">
-        <input class="form-control" type="text" [(ngModel)]="searchTextUser" placeholder="Search">
+        <input class="form-control" type="text" [(ngModel)]="searchTextUser" placeholder="Search for other movie buddies">
       </div>
 
       <table class="table" *ngIf="(allAccounts | textFilter: searchTextUser).length > 0; else noResults">
@@ -41,10 +40,8 @@
     </div>
 
     <div class="container">
-      <h2>Friends</h2>
-
       <div class="form-group">
-        <input class="form-control" type="text" [(ngModel)]="searchTextFriend" placeholder="Search">
+        <input class="form-control" type="text" [(ngModel)]="searchTextFriend" placeholder="Search friends">
       </div>
 
       <table class="table" *ngIf="(friendsAccounts | textFilter: searchTextFriend).length > 0; else noResults">

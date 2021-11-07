@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/c
 import {AccountModel} from "../../models/account.model";
 import {select, Store} from "@ngrx/store";
 import {GetAllAccountsAction} from "../../account/+state/account.actions";
-import {combineLatest, Subject} from "rxjs";
+import {combineLatest, Subject, zip} from "rxjs";
 import {AccountSelectorService} from "../../account/account-selector.service";
 import {MatTabChangeEvent} from "@angular/material/tabs";
 import {concatMap, switchMap, takeUntil} from "rxjs/operators";
