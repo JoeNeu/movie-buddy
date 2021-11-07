@@ -1,10 +1,12 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AccountModel} from "../../models/account.model";
-import {Store} from "@ngrx/store";
+import {select, Store} from "@ngrx/store";
 import {GetAllAccountsAction} from "../../account/+state/account.actions";
 import {Subject} from "rxjs";
 import {AccountSelectorService} from "../../account/account-selector.service";
 import {MatTabChangeEvent} from "@angular/material/tabs";
+import {switchMap, takeUntil} from "rxjs/operators";
+import {getCurrentUser} from "../../core/+state/core.reducer";
 
 @Component({
   selector: 'app-social',
@@ -26,8 +28,13 @@ export class SocialComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(GetAllAccountsAction());
-
-    this.accountSelectorService.getAllAccountsFromStore().subscribe( accounts =>
+    this.store.pipe(
+      takeUntil(this.unsubscribe$),
+      select(getCurrentUser),
+      switchMap((account: AccountModel) => {
+        return this.accountSelectorService.getAllOtherAccountsFromStore(account.id)
+      })
+    ).subscribe( (accounts: AccountModel[]) =>
       this.allAccounts = accounts
     )
   }
