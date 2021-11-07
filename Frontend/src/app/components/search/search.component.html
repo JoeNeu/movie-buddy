@@ -20,7 +20,7 @@
 </div>
 
 
-<h2>MOVIES</h2>
+<h2 *ngIf="movieSearchResult.length > 0">MOVIES</h2>
 
 <div class="row">
   <div class="col-xl-3 col-lg-4 col-sm-12" *ngFor="let movie of movieSearchResult">
@@ -28,7 +28,7 @@
       <mat-card-header class="card-heading">
         <mat-card-title>{{movie.original_title}}</mat-card-title>
         <mat-card-subtitle><h2>({{movie.release_date}})</h2></mat-card-subtitle>
-        <div><img mat-card-image class="card-image" src="{{movie.path}}" alt="image of {{movie.original_title}}"></div>
+        <div style="height: 200px;"><img mat-card-image class="card-image" src="{{movie.path}}" alt="image of {{movie.original_title}}"></div>
         <div class="rating-text">Rating: {{movie.vote_average}}</div>
       </mat-card-header>
       <mat-card-content>
@@ -51,7 +51,7 @@
   </div>
 </div>
 
-<h2 style="margin-top: 200px;">TV SHOWS</h2>
+<h2 *ngIf="tvShowSearchResult.length > 0" style="margin-top: 200px;">TV SHOWS</h2>
 
 <div class="row">
   <div class="col-md-4" *ngFor="let show of tvShowSearchResult">
@@ -59,7 +59,7 @@
       <mat-card-header class="card-heading">
         <mat-card-title>{{show.name}}</mat-card-title>
         <mat-card-subtitle><h2>({{show.first_air_date}})</h2></mat-card-subtitle>
-        <div><img mat-card-image class="card-image" src="{{show.path}}" alt="image of {{show.name}}"></div>
+        <div style="height: 200px;"><img mat-card-image class="card-image" src="{{show.path}}" alt="image of {{show.name}}"></div>
         <div class="rating-text">Rating: {{show.vote_average}}</div>
       </mat-card-header>
       <mat-card-content>
