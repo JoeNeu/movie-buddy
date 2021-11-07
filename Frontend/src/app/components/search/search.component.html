@@ -19,7 +19,7 @@
   </div>
 </div>
 
-
+<h2>MOVIES</h2>
 <div class="accordion-action-buttons">
   <button mat-button (click)="accordion.openAll()">Expand All</button>
   <button mat-button (click)="accordion.closeAll()">Collapse All</button>
@@ -37,5 +37,27 @@
     </mat-expansion-panel-header>
     <div>Rating: {{movie.vote_average}}</div>
     <div>{{movie.overview}}</div>
+  </mat-expansion-panel>
+</mat-accordion>
+
+
+<h2>TV SHOWS</h2>
+<div class="accordion-action-buttons">
+  <button mat-button (click)="accordion.openAll()">Expand All</button>
+  <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+</div>
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel *ngFor="let show of tvShowSearchResult">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <img class="search-result-img" src="{{show.path}}" alt="image of {{show.name}}">
+      </mat-panel-title>
+      <mat-panel-description>
+        <h2 class="search-result-title">{{show.name}} </h2>
+        <h2>({{show.first_air_date}})</h2>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div>Rating: {{show.vote_average}}</div>
+    <div>{{show.overview}}</div>
   </mat-expansion-panel>
 </mat-accordion>

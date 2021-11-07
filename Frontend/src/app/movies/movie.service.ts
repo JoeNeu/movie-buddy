@@ -29,7 +29,11 @@ export class MovieService {
     return this.http.get<tmdbModel>(`${this.themoviedbUrl}/trending/movie/week?api_key=${this.themoviedbApiKey}`);
   }
 
-  getSearchResult(searchValue): Observable<tmdbModel> {
+  getMovieSearchResult(searchValue): Observable<tmdbModel> {
     return this.http.get<tmdbModel>(`${this.themoviedbUrl}/search/movie?api_key=${this.themoviedbApiKey}&query=${searchValue}`);
+  }
+
+  getTvShowSearchResult(searchValue): Observable<tmdbModel> {
+    return this.http.get<tmdbModel>(`${this.themoviedbUrl}/search/tv?api_key=${this.themoviedbApiKey}&query=${searchValue}`);
   }
 }

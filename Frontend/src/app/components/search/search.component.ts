@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {SearchService} from './search.service';
 import {MovieService} from '../../movies/movie.service';
-import {tmdbModel, tmdbMovie} from '../../models/the-movie-db.model';
+import {tmdbModel, tmdbMovie, tmdbTvShow} from '../../models/the-movie-db.model';
 import {MatAccordion} from '@angular/material/expansion';
 import {FormControl} from '@angular/forms';
 
@@ -16,10 +15,10 @@ export class SearchComponent implements OnInit {
   searchControl = new FormControl('');
 
   movieSearchValue = '';
-  movieSearchResult: tmdbMovie[] = [];
+  movieSearchResult = [];
+  tvShowSearchResult = [];
 
   constructor(
-    private searchService: SearchService,
     private movieService: MovieService
   ) {
   }
@@ -34,9 +33,20 @@ export class SearchComponent implements OnInit {
   }
 
   submitForm(): void {
-    this.movieService.getSearchResult(this.movieSearchValue)
+    this.movieService.getMovieSearchResult(this.movieSearchValue)
       .subscribe((data: tmdbModel) => {
           this.movieSearchResult = data.results.map((obj) => {
+            return {
+              ...obj,
+              path: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + obj.poster_path
+            };
+          });
+        }
+      );
+
+    this.movieService.getTvShowSearchResult(this.movieSearchValue)
+      .subscribe((data: tmdbModel) => {
+          this.tvShowSearchResult = data.results.map((obj) => {
             return {
               ...obj,
               path: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + obj.poster_path
