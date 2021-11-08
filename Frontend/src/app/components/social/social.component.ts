@@ -46,10 +46,7 @@ export class SocialComponent implements OnInit, AfterViewInit, OnDestroy {
         )
       })
     ).subscribe(([accounts, friends]: [AccountModel[], AccountModel[]]) => {
-        console.log("f", friends)
         this.allAccounts = accounts.filter(account => !friends.map(friend => friend.id).includes(account.id));
-        console.log("a", this.allAccounts)
-
         this.friendsAccounts = friends;
       }
     );

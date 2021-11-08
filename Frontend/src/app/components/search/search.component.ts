@@ -1,8 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MovieService} from '../../movies/movie.service';
 import {tmdbModel} from '../../models/the-movie-db.model';
 import {MatAccordion} from '@angular/material/expansion';
 import {FormControl} from '@angular/forms';
+import {ViewportScroller} from "@angular/common";
 
 @Component({
   selector: 'app-search',
@@ -11,6 +12,7 @@ import {FormControl} from '@angular/forms';
 })
 export class SearchComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
+  @ViewChild("movieAnchor") MyProp: ElementRef;
 
   searchControl = new FormControl('');
 
@@ -41,6 +43,7 @@ export class SearchComponent implements OnInit {
               path: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + obj.poster_path
             };
           });
+        this.MyProp.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       );
 

@@ -1,9 +1,13 @@
 mat-card {
+  width: 300px;
   margin: 20px;
-}
 
-.card-image {
-  height: 100%;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  color: white;
 }
 
 .card-heading {
@@ -12,9 +16,15 @@ mat-card {
   flex-direction: column;
 }
 
-mat-card-title {
+mat-card-title, mat-card-subtitle {
   justify-content: center;
   display: flex;
+  color: white;
+  font-stretch: expanded;
+  height: 100px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 5%;
+  padding: 30px;
 }
 
 /*** ACCORDION ***/
@@ -42,10 +52,6 @@ mat-card-title {
 
 mat-expansion-panel-header {
   height: 100px;
-
-  &.mat-expanded {
-    height: 150px;
-  }
 }
 
 .mat-expansion-panel-header-title {

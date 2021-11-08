@@ -16,12 +16,12 @@ class tmdbVideo {
   path: string;
   backdrop_path?: string;
   poster_path?: string;
+  overview: string;
 }
 
 
 export class tmdbMovie extends tmdbVideo {
   adult: boolean;
-  overview: string;
   release_date: string;
   original_title: string;
   title: string;
@@ -33,5 +33,4 @@ export class tmdbTvShow extends tmdbVideo {
   name: string;
   original_country: string;
   original_name: string;
-  overview: string;
 }

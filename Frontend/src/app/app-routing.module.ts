@@ -59,7 +59,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes, {enableTracing: false, useHash: true})
+    RouterModule.forRoot(appRoutes, {enableTracing: false, useHash: true, anchorScrolling: 'enabled', scrollOffset: [0, 50]})
   ],
   exports: [
     RouterModule

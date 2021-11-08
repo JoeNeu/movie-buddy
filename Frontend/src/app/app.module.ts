@@ -37,13 +37,9 @@ import { MessagesComponent } from './components/messages/messages.component';
 import { InfoComponent } from './components/info/info.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {IvyCarouselModule} from "angular-responsive-carousel";
-import {CarouselModule} from "primeng/carousel";
-import {ButtonModule} from "primeng/button";
-import {ToastModule} from "primeng/toast";
 import { TextFilterPipe } from './pipes/textFilter.pipe';
 import {SocialEffects} from "./social/+state/social.effects";
 import { MovieCardComponent } from './components/shared/movie-card/movie-card.component';
-import { ShowCardComponent } from './components/shared/show-card/show-card.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +56,6 @@ import { ShowCardComponent } from './components/shared/show-card/show-card.compo
     InfoComponent,
     TextFilterPipe,
     MovieCardComponent,
-    ShowCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,10 +85,7 @@ import { ShowCardComponent } from './components/shared/show-card/show-card.compo
     MatIconModule,
     MatCheckboxModule,
     MatExpansionModule,
-    IvyCarouselModule,
-    CarouselModule,
-    ButtonModule,
-    ToastModule,
+    IvyCarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent],

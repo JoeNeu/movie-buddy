@@ -66,7 +66,6 @@ export class TrendingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.movieService.getPopularMovies().pipe(
          takeUntil(this.unsubscribe$)
         ).subscribe(data => {
-          console.log(data)
           this.popularImages = data.results.filter(obj => obj.poster_path).map(obj => {
             return {
               ...obj,
