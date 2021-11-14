@@ -9,6 +9,8 @@ import at.webengineering.backend.mapper.AccountMapper
 import at.webengineering.backend.repositories.IAccountRepository
 import at.webengineering.backend.utils.HashUtil.hash
 import at.webengineering.backend.dtos.PasswordChangeDto
+import at.webengineering.backend.dtos.VideoProductionDto
+import at.webengineering.backend.entities.VideoProduction
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -106,5 +108,21 @@ class AccountService(
 
     fun getAllFriends(account: Account): List<AccountDto> {
         return accountRepository.findAllById(account.friends).map { acc -> accountMapper.toDto(acc) }
+    }
+
+    fun addToFavorites(account: Account, videoProduction: VideoProductionDto) {
+        val vidProd = VideoProduction(videoProduction.movieId, videoProduction.productionType);
+        account.favorites.add(vidProd)
+        accountRepository.save(account)
+    }
+
+    fun removeFromFavorites(account: Account, videoProduction: VideoProductionDto) {
+        val favoriteToRemove = account.favorites.find { fav -> fav.productionType == videoProduction.productionType && fav.movieId == videoProduction.movieId }
+        account.favorites.remove(favoriteToRemove)
+        accountRepository.save(account)
+    }
+
+    fun getAllFavorites(account: Account): List<VideoProductionDto> {
+        return account.favorites.toList().map { vid -> VideoProductionDto(vid.movieId, vid.productionType) };
     }
 }

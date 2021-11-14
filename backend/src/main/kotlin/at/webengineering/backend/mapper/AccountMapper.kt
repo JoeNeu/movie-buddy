@@ -20,7 +20,8 @@ class AccountMapper(
             firstname = accountCreationDto.firstname,
             lastname = accountCreationDto.lastname,
             isAdministrator = false,
-            friends = mutableListOf()
+            friends = mutableListOf(),
+            favorites = mutableListOf()
         )
     }
 

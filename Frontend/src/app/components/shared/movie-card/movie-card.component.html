@@ -27,5 +27,9 @@
   <mat-card-actions>
     <button mat-button color="white" style="background: #141414">LIKE</button>
     <button mat-button color="white" style="background: #141414">SHARE</button>
+    <button mat-button color="white" style="background: #141414"
+       (click)="addToFavorites(movie)">
+      <mat-icon>star</mat-icon>&emsp;ADD
+    </button>
   </mat-card-actions>
 </mat-card>

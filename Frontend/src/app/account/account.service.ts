@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {AccountModel, LoginDto, PasswordChangeDto, RegisterDto} from '../models/account.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {CoreSelectorService} from "../core/core-selector.service";
+import {VideoProductionModel} from '../models/VideoProduction.model';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +70,24 @@ export class AccountService {
 
   removeFriend(id: string, token: string) {
     return this.http.put(this.accountURL + '/friends/remove', id ,{
+      headers: this.commonHttpHeaders.append('token', token)
+    });
+  }
+
+  getAllFavorites(token: string): Observable<VideoProductionModel[]> {
+    return this.http.get<VideoProductionModel[]>(this.accountURL + '/favorites', {
+      headers: this.commonHttpHeaders.append('token', token)
+    });
+  }
+
+  addToFavorites(videoProduction: VideoProductionModel, token: string): Observable<string> {
+    return this.http.put<string>(this.accountURL + '/favorites/add', videoProduction ,{
+      headers: this.commonHttpHeaders.append('token', token)
+    });
+  }
+
+  removeFromFavorites(videoProduction: VideoProductionModel, token: string): Observable<string> {
+    return this.http.put<string>(this.accountURL + '/favorites/remove', videoProduction ,{
       headers: this.commonHttpHeaders.append('token', token)
     });
   }

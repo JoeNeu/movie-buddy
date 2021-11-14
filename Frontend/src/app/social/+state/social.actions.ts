@@ -1,5 +1,5 @@
-import {createAction, props} from "@ngrx/store";
-import {AccountModel} from "../../models/account.model";
+import {createAction, props} from '@ngrx/store';
+import {AccountModel} from '../../models/account.model';
 
 export const GetAllFriendsAction = createAction(
   '[Social] Get all Friends',

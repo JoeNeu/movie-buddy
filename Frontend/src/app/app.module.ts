@@ -15,31 +15,33 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from "@angular/material/core";
-import {EffectsModule} from "@ngrx/effects";
-import {StoreModule} from "@ngrx/store";
-import {reducers} from "./app.store";
-import {StoreDevtoolsModule} from "@ngrx/store-devtools";
-import {AccountEffects} from "./account/+state/account.effects";
-import {NavbarComponent} from "./components/navbar/navbar.component";
-import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatNativeDateModule} from '@angular/material/core';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from './app.store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {AccountEffects} from './account/+state/account.effects';
+import {NavbarComponent} from './components/navbar/navbar.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatIconModule} from "@angular/material/icon";
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { AccountComponent } from './components/account/account.component';
-import { HomeComponent } from './components/home/home.component';
-import { SearchComponent } from './components/search/search.component';
-import { TrendingComponent } from './components/trending/trending.component';
-import { SocialComponent } from './components/social/social.component';
-import { ScheduleComponent } from './components/schedule/schedule.component';
-import { MessagesComponent } from './components/messages/messages.component';
-import { InfoComponent } from './components/info/info.component';
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {IvyCarouselModule} from "angular-responsive-carousel";
-import { TextFilterPipe } from './pipes/textFilter.pipe';
-import {SocialEffects} from "./social/+state/social.effects";
-import { MovieCardComponent } from './components/shared/movie-card/movie-card.component';
+import {AccountComponent} from './components/account/account.component';
+import {HomeComponent} from './components/home/home.component';
+import {SearchComponent} from './components/search/search.component';
+import {TrendingComponent} from './components/trending/trending.component';
+import {SocialComponent} from './components/social/social.component';
+import {ScheduleComponent} from './components/schedule/schedule.component';
+import {MessagesComponent} from './components/messages/messages.component';
+import {InfoComponent} from './components/info/info.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {IvyCarouselModule} from 'angular-responsive-carousel';
+import {TextFilterPipe} from './pipes/textFilter.pipe';
+import {SocialEffects} from './social/+state/social.effects';
+import {MovieCardComponent} from './components/shared/movie-card/movie-card.component';
+import {FavoritesComponent} from './components/favorites/favorites.component';
+import {FavoritesEffects} from './components/favorites/+state/favorites.effects';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,7 @@ import { MovieCardComponent } from './components/shared/movie-card/movie-card.co
     InfoComponent,
     TextFilterPipe,
     MovieCardComponent,
+    FavoritesComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +76,7 @@ import { MovieCardComponent } from './components/shared/movie-card/movie-card.co
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    EffectsModule.forRoot([AccountEffects, SocialEffects]),
+    EffectsModule.forRoot([AccountEffects, SocialEffects, FavoritesEffects]),
     [StoreModule.forRoot(reducers)],
     StoreDevtoolsModule.instrument({
       name: 'MovieBuddy',
