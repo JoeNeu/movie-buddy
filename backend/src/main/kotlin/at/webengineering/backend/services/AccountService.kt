@@ -111,7 +111,7 @@ class AccountService(
     }
 
     fun addToFavorites(account: Account, videoProduction: VideoProductionDto) {
-        val vidProd = VideoProduction(videoProduction.movieId, videoProduction.productionType);
+        val vidProd = VideoProduction(videoProduction.movieId, videoProduction.productionType, videoProduction.uid);
         account.favorites.add(vidProd)
         accountRepository.save(account)
     }
@@ -123,6 +123,6 @@ class AccountService(
     }
 
     fun getAllFavorites(account: Account): List<VideoProductionDto> {
-        return account.favorites.toList().map { vid -> VideoProductionDto(vid.movieId, vid.productionType) };
+        return account.favorites.toList().map { vid -> VideoProductionDto(vid.movieId, vid.productionType, vid.uid) };
     }
 }

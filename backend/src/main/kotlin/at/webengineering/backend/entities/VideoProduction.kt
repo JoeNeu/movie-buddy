@@ -12,4 +12,7 @@ data class VideoProduction(
 
         @Column(nullable = false)
         var productionType: String,
-        )
+
+        @Column(nullable = false)
+        var uid: String,
+)

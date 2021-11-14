@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {tmdbModel} from '../models/the-movie-db.model';
+import {tmdbModel, tmdbMovie, tmdbTvShow} from '../models/the-movie-db.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,11 +37,11 @@ export class MovieService {
     return this.http.get<tmdbModel>(`${this.themoviedbUrl}/search/tv?api_key=${this.themoviedbApiKey}&query=${searchValue}`);
   }
 
-  getMovieById(id): Observable<tmdbModel> {
-    return this.http.get<tmdbModel>(`${this.themoviedbUrl}/movie/${id}?api_key=${this.themoviedbApiKey}`);
+  getMovieById(id): Observable<tmdbMovie> {
+    return this.http.get<tmdbMovie>(`${this.themoviedbUrl}/movie/${id}?api_key=${this.themoviedbApiKey}`);
   }
 
-  getTvShowById(id): Observable<tmdbModel> {
-    return this.http.get<tmdbModel>(`${this.themoviedbUrl}/tv/${id}?api_key=${this.themoviedbApiKey}`);
+  getTvShowById(id): Observable<tmdbTvShow> {
+    return this.http.get<tmdbTvShow>(`${this.themoviedbUrl}/tv/${id}?api_key=${this.themoviedbApiKey}`);
   }
 }

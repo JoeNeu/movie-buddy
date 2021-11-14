@@ -42,12 +42,33 @@ export class FavoritesEffects {
   @Effect()
   readonly addToFavorites$: Observable<Action> = this.actions$.pipe(
     ofType(favoritesActions.AddToFavoritesAction),
-    switchMap(({videoProduction}) => {
+    switchMap(({favorite}) => {
       return this.coreSelectorService.getCurrentUserToken().pipe(
         switchMap((token: string) => {
-          return this.accountService.addToFavorites(videoProduction, token).pipe(
+          return this.accountService.addToFavorites(favorite, token).pipe(
             map(_ => {
-              return favoritesActions.AddToFavoritesActionSuccess({favorite: videoProduction})
+              const fav = {...favorite, uid : favorite.productionType + favorite.movieId}
+              return favoritesActions.AddToFavoritesActionSuccess({favorite: fav})
+            }),
+            catchError(err => {
+              console.warn(err);
+              return EMPTY
+            })
+          );
+        })
+      )
+    })
+  );
+
+  @Effect()
+  readonly removeFromFavorites$: Observable<Action> = this.actions$.pipe(
+    ofType(favoritesActions.RemoveFromFavoritesAction),
+    switchMap(({favorite}) => {
+      return this.coreSelectorService.getCurrentUserToken().pipe(
+        switchMap((token: string) => {
+          return this.accountService.removeFromFavorites(favorite, token).pipe(
+            map(_ => {
+              return favoritesActions.RemoveFavoriteActionSuccess({favorite})
             }),
             catchError(err => {
               console.warn(err);

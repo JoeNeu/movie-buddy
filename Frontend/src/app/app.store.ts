@@ -10,7 +10,7 @@ export interface State {
   account: fromAccount.AccountState;
   core: fromCore.CoreState;
   social: fromSocial.SocialState;
-  favorites: fromFavorites.FavoriteslState;
+  favorites: fromFavorites.FavoritesState;
 }
 
 
@@ -28,4 +28,4 @@ export const metaReducers: MetaReducer<State>[] = !(environment.production)
 
 export const accountState = createFeatureSelector<fromAccount.AccountState>('account');
 export const socialState = createFeatureSelector<fromSocial.SocialState>('social');
-export const favoritesState = createFeatureSelector<fromFavorites.FavoriteslState>('favorites');
+export const favoritesState = createFeatureSelector<fromFavorites.FavoritesState>('favorites');

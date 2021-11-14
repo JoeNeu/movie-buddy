@@ -5,15 +5,15 @@ import * as favoritesAction from './favorites.actions';
 import {VideoProductionModel} from '../../../models/VideoProduction.model';
 
 export const FavoritesAdapter: EntityAdapter<VideoProductionModel> = createEntityAdapter<VideoProductionModel>({
-  selectId: vp => vp.movieId // TODO not unique
+  selectId: vp => vp.uid
 });
 
-export interface FavoriteslState extends EntityState<VideoProductionModel> {
+export interface FavoritesState extends EntityState<VideoProductionModel> {
 }
 
-export const initialState: FavoriteslState = FavoritesAdapter.getInitialState({});
+export const initialState: FavoritesState = FavoritesAdapter.getInitialState({});
 
-export function reducer(state: FavoriteslState | undefined, action: Action): FavoriteslState {
+export function reducer(state: FavoritesState | undefined, action: Action): FavoritesState {
   return AccountReducer(state, action);
 }
 
@@ -27,11 +27,11 @@ const AccountReducer = createReducer(
     (state, {favorite}) => ({
       ...FavoritesAdapter.upsertOne(favorite, state)
     })),
-  // on(favoritesAction.DeleteFriendActionSuccess,
-  //   (state, {id}) => ({
-  //     ...FavoritesAdapter.removeOne(id, state)
-  //   })),
-);
+  on(favoritesAction.RemoveFavoriteActionSuccess,
+    (state, {favorite}) => ({
+      ...FavoritesAdapter.removeOne(favorite.uid, state)
+    })),
+  );
 
 export const {
   selectAll: selectAllFavorites,
@@ -39,6 +39,6 @@ export const {
   selectTotal,
 } = FavoritesAdapter.getSelectors();
 
-export function getAllFriends(): (s: FavoriteslState) => VideoProductionModel[] {
-  return (state: FavoriteslState) => selectAllFavorites(state);
+export function getAllFavorites(): (s: FavoritesState) => VideoProductionModel[] {
+  return (state: FavoritesState) => selectAllFavorites(state);
 }

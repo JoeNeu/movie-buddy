@@ -12,10 +12,20 @@ export const GetAllFavoritesActionSuccess = createAction(
 
 export const AddToFavoritesAction = createAction(
   '[Favorites] Add To Favorites',
-  props<{videoProduction: VideoProductionModel}>()
+  props<{favorite: VideoProductionModel}>()
 );
 
 export const AddToFavoritesActionSuccess = createAction(
   '[Favorites] Add To Favorites Success',
+  props<{favorite: VideoProductionModel}>()
+);
+
+export const RemoveFromFavoritesAction = createAction(
+  '[Favorites] Remove Favorite',
+  props<{favorite: VideoProductionModel}>()
+);
+
+export const RemoveFavoriteActionSuccess = createAction(
+  '[Favorites] Remove Favorite Success',
   props<{favorite: VideoProductionModel}>()
 );

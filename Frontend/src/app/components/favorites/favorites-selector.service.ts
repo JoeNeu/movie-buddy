@@ -19,7 +19,7 @@ export class FavoritesSelectorService {
   getAllFavoritesFromStore(): Observable<VideoProductionModel[]> {
     return this.store.pipe(
       select(createSelector(
-        fromRoot.favoritesState, fromFavorites.getAllFriends())
+        fromRoot.favoritesState, fromFavorites.getAllFavorites())
       )
     );
   }
