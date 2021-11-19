@@ -27,5 +27,11 @@
   <mat-card-actions>
     <button mat-button color="white" style="background: #141414">LIKE</button>
     <button mat-button color="white" style="background: #141414">SHARE</button>
+    <button mat-button color="white" style="background: #141414"
+       (click)="addToFavorites()">
+      <mat-icon *ngIf="isAlreadyFavorite">favorite</mat-icon>
+      <mat-icon *ngIf="!isAlreadyFavorite">favorite_border</mat-icon>
+      &emsp;ADD
+    </button>
   </mat-card-actions>
 </mat-card>

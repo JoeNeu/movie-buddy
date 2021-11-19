@@ -1,12 +1,12 @@
-import {Injectable} from "@angular/core";
-import {Actions, Effect, ofType} from "@ngrx/effects";
-import {AccountService} from "../../account/account.service";
-import {CoreSelectorService} from "../../core/core-selector.service";
-import {Action} from "@ngrx/store";
-import {EMPTY, Observable} from "rxjs";
-import * as socialActions from "./social.actions";
-import {catchError, exhaustMap, map, switchMap} from "rxjs/operators";
-import {AccountModel} from "../../models/account.model";
+import {Injectable} from '@angular/core';
+import {Actions, Effect, ofType} from '@ngrx/effects';
+import {AccountService} from '../../account/account.service';
+import {CoreSelectorService} from '../../core/core-selector.service';
+import {Action} from '@ngrx/store';
+import {EMPTY, Observable} from 'rxjs';
+import * as socialActions from './social.actions';
+import {catchError, exhaustMap, map, switchMap} from 'rxjs/operators';
+import {AccountModel} from '../../models/account.model';
 
 @Injectable(
 )

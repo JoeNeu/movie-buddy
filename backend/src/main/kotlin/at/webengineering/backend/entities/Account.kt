@@ -28,5 +28,11 @@ data class Account (
     var isAdministrator: Boolean,
 
     @ElementCollection
-    var friends: MutableList<UUID>
+    var friends: MutableList<UUID>,
+
+    @ElementCollection
+    @CollectionTable(
+            joinColumns = [JoinColumn(name="ACCOUNT_ID")]
+    )
+    var favorites: MutableList<VideoProduction>
 )

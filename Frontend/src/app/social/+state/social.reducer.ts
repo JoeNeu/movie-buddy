@@ -1,10 +1,8 @@
 import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
 import {AccountModel} from '../../models/account.model';
-import {Action, createFeatureSelector, createReducer, createSelector, on} from '@ngrx/store';
+import {Action, createReducer, on} from '@ngrx/store';
 
 import * as socialAction from './social.actions';
-import {DeleteFriendActionSuccess} from "./social.actions";
-import {CoreState, coreState} from "../../core/+state/core.reducer";
 
 export const SocialAdapter: EntityAdapter<AccountModel> = createEntityAdapter<AccountModel>({
   selectId: vp => vp.id

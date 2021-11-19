@@ -1,6 +1,7 @@
 package at.webengineering.backend.controller
 
 import at.webengineering.backend.dtos.*
+import at.webengineering.backend.entities.VideoProduction
 import at.webengineering.backend.exceptions.AccountNotFoundException
 import at.webengineering.backend.exceptions.InvalidLoginCredentialsException
 import at.webengineering.backend.exceptions.TokenNotValidException
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.util.*
 
+@CrossOrigin(origins = ["http://localhost:4200"])
 @RestController
 @RequestMapping("/accounts")
 class AccountController(
@@ -163,6 +165,61 @@ class AccountController(
         return try {
             val account = jwtTokenService.getAccountFromToken(token)
             accountService.removeFriend(account, UUID.fromString(id))
+            ResponseEntity.ok().body("")
+
+        } catch (e: TokenNotValidException) {
+            throw ResponseStatusException(HttpStatus.FORBIDDEN, e.message)
+        } catch (e: AccountNotFoundException) {
+            throw ResponseStatusException(HttpStatus.FORBIDDEN, e.message)
+        } catch (e: Exception) {
+            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.message)
+        }
+    }
+
+    @GetMapping("/favorites")
+    fun getAllFavorites(
+            @RequestHeader("token") token: String
+    ): ResponseEntity<List<VideoProductionDto>> {
+        return try {
+            val account = jwtTokenService.getAccountFromToken(token)
+            val favoritesList = accountService.getAllFavorites(account)
+            ResponseEntity.ok().body(favoritesList)
+        } catch (e: TokenNotValidException) {
+            throw ResponseStatusException(HttpStatus.FORBIDDEN, e.message)
+        } catch (e: AccountNotFoundException) {
+            throw ResponseStatusException(HttpStatus.FORBIDDEN, e.message)
+        } catch (e: Exception) {
+            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.message)
+        }
+    }
+
+    @PutMapping("/favorites/add")
+    fun addToFavorites(
+            @RequestHeader("token") token: String,
+            @RequestBody videoProduction: VideoProductionDto
+    ): ResponseEntity<String> {
+        return try {
+            val account = jwtTokenService.getAccountFromToken(token)
+            accountService.addToFavorites(account, videoProduction)
+            ResponseEntity.ok().body("")
+
+        } catch (e: TokenNotValidException) {
+            throw ResponseStatusException(HttpStatus.FORBIDDEN, e.message)
+        } catch (e: AccountNotFoundException) {
+            throw ResponseStatusException(HttpStatus.FORBIDDEN, e.message)
+        } catch (e: Exception) {
+            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.message)
+        }
+    }
+
+    @PutMapping("/favorites/remove")
+    fun removeFromFavorites(
+            @RequestHeader("token") token: String,
+            @RequestBody videoProduction: VideoProductionDto
+    ): ResponseEntity<String> {
+        return try {
+            val account = jwtTokenService.getAccountFromToken(token)
+            accountService.removeFromFavorites(account, videoProduction)
             ResponseEntity.ok().body("")
 
         } catch (e: TokenNotValidException) {

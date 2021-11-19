@@ -2,14 +2,15 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './components/login/login.component';
 import {IsLoggedInGuardService} from './guards/login-guard.service';
-import {AccountComponent} from "./components/account/account.component";
-import {HomeComponent} from "./components/home/home.component";
-import {ScheduleComponent} from "./components/schedule/schedule.component";
-import {SocialComponent} from "./components/social/social.component";
-import {SearchComponent} from "./components/search/search.component";
-import {TrendingComponent} from "./components/trending/trending.component";
-import {InfoComponent} from "./components/info/info.component";
-import {MessagesComponent} from "./components/messages/messages.component";
+import {AccountComponent} from './components/account/account.component';
+import {HomeComponent} from './components/home/home.component';
+import {ScheduleComponent} from './components/schedule/schedule.component';
+import {SocialComponent} from './components/social/social.component';
+import {SearchComponent} from './components/search/search.component';
+import {TrendingComponent} from './components/trending/trending.component';
+import {InfoComponent} from './components/info/info.component';
+import {MessagesComponent} from './components/messages/messages.component';
+import {FavoritesComponent} from './components/favorites/favorites.component';
 
 const appRoutes: Routes = [
   {
@@ -53,6 +54,11 @@ const appRoutes: Routes = [
   {
     path: 'schedule',
     component: ScheduleComponent,
+    canActivate: []
+  },
+  {
+    path: 'favorites',
+    component: FavoritesComponent,
     canActivate: []
   },
 ];
