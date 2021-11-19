@@ -6,6 +6,8 @@ import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import * as fromRoot from '../../../app.store';
 import * as fromFavorites from '../../favorites/+state/favorites.reducer';
+import * as fromWatchlist from '../../watchlist/+state/watchlist.reducer';
+import {AddToWatchlistAction, GetAllWatchlistItemsAction, RemoveFromWatchlistAction} from '../../watchlist/+state/watchlist.actions';
 
 @Component({
   selector: 'app-movie-card',
@@ -15,7 +17,9 @@ import * as fromFavorites from '../../favorites/+state/favorites.reducer';
 export class MovieCardComponent implements OnInit, OnDestroy {
   @Input() movie; // With Type does some problems
   favorites = [];
+  watchlist = [];
   isAlreadyFavorite = false;
+  isAlreadyInWatchlist = false;
 
   private unsubscribe$ = new Subject();
 
@@ -39,6 +43,20 @@ export class MovieCardComponent implements OnInit, OnDestroy {
           return fav.productionType === productionType && fav.movieId === this.movie.id;
         });
     });
+
+    this.store.pipe(
+      takeUntil(this.unsubscribe$),
+      select(createSelector(
+        fromRoot.watchlistState, fromWatchlist.getAllWatchlistItems()
+      ))
+    ).subscribe((watchlistItems: VideoProductionModel[]) => {
+      this.watchlist = watchlistItems;
+      this.isAlreadyInWatchlist = this.watchlist
+        .find((item) => {
+          const productionType = this.getProductionType(this.movie);
+          return item.productionType === productionType && item.movieId === this.movie.id;
+        });
+    });
   }
 
   addToFavorites() {
@@ -57,7 +75,25 @@ export class MovieCardComponent implements OnInit, OnDestroy {
     }
 
     this.store.dispatch(GetAllFavoritesAction());
+  }
 
+  addToWatchlist() {
+    console.log('add to watchlist', this.isAlreadyInWatchlist);
+    const productionType = this.getProductionType(this.movie);
+
+    const favorite: VideoProductionModel = {
+      movieId: this.movie.id,
+      productionType,
+      uid: productionType + this.movie.id
+    };
+
+    if (this.isAlreadyInWatchlist) {
+      this.store.dispatch(RemoveFromWatchlistAction({favorite}));
+    } else {
+      this.store.dispatch(AddToWatchlistAction({favorite}));
+    }
+
+    this.store.dispatch(GetAllWatchlistItemsAction());
   }
 
   getProductionType(movie): string {

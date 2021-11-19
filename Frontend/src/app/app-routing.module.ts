@@ -11,6 +11,7 @@ import {TrendingComponent} from './components/trending/trending.component';
 import {InfoComponent} from './components/info/info.component';
 import {MessagesComponent} from './components/messages/messages.component';
 import {FavoritesComponent} from './components/favorites/favorites.component';
+import {WatchlistComponent} from './components/watchlist/watchlist.component';
 
 const appRoutes: Routes = [
   {
@@ -59,6 +60,11 @@ const appRoutes: Routes = [
   {
     path: 'favorites',
     component: FavoritesComponent,
+    canActivate: []
+  },
+  {
+    path: 'watchlist',
+    component: WatchlistComponent,
     canActivate: []
   },
 ];

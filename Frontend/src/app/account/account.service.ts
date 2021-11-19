@@ -91,4 +91,26 @@ export class AccountService {
       headers: this.commonHttpHeaders.append('token', token)
     });
   }
+
+  getAllWatchlistItems(token: string): Observable<VideoProductionModel[]> {
+    console.log('getAll');
+
+    return this.http.get<VideoProductionModel[]>(this.accountURL + '/watchlist', {
+      headers: this.commonHttpHeaders.append('token', token)
+    });
+  }
+
+  addToWatchlist(videoProduction: VideoProductionModel, token: string): Observable<string> {
+    console.log('add');
+    return this.http.put<string>(this.accountURL + '/watchlist/add', videoProduction ,{
+      headers: this.commonHttpHeaders.append('token', token)
+    });
+  }
+
+  removeFromWatchlist(videoProduction: VideoProductionModel, token: string): Observable<string> {
+    console.log('remove');
+    return this.http.put<string>(this.accountURL + '/watchlist/remove', videoProduction ,{
+      headers: this.commonHttpHeaders.append('token', token)
+    });
+  }
 }

@@ -3,14 +3,16 @@ import {storeFreeze} from 'ngrx-store-freeze';
 import * as fromAccount from './account/+state/account.reducer';
 import * as fromSocial from './social/+state/social.reducer';
 import * as fromFavorites from './components/favorites/+state/favorites.reducer';
+import * as fromWatchlist from './components/watchlist/+state/watchlist.reducer';
 import * as fromCore from './core/+state/core.reducer';
-import {environment} from "../environments/environment";
+import {environment} from '../environments/environment';
 
 export interface State {
   account: fromAccount.AccountState;
   core: fromCore.CoreState;
   social: fromSocial.SocialState;
   favorites: fromFavorites.FavoritesState;
+  watchlist: fromWatchlist.WatchlistState;
 }
 
 
@@ -18,7 +20,8 @@ export const reducers: ActionReducerMap<State> = {
   account: fromAccount.reducer,
   core: fromCore.reducer,
   social: fromSocial.reducer,
-  favorites: fromFavorites.reducer
+  favorites: fromFavorites.reducer,
+  watchlist: fromWatchlist.reducer
 };
 
 export const metaReducers: MetaReducer<State>[] = !(environment.production)
@@ -29,3 +32,4 @@ export const metaReducers: MetaReducer<State>[] = !(environment.production)
 export const accountState = createFeatureSelector<fromAccount.AccountState>('account');
 export const socialState = createFeatureSelector<fromSocial.SocialState>('social');
 export const favoritesState = createFeatureSelector<fromFavorites.FavoritesState>('favorites');
+export const watchlistState = createFeatureSelector<fromWatchlist.WatchlistState>('watchlist');

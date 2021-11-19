@@ -42,6 +42,8 @@ import {SocialEffects} from './social/+state/social.effects';
 import {MovieCardComponent} from './components/shared/movie-card/movie-card.component';
 import {FavoritesComponent} from './components/favorites/favorites.component';
 import {FavoritesEffects} from './components/favorites/+state/favorites.effects';
+import {WatchlistComponent} from './components/watchlist/watchlist.component';
+import {WatchlistEffects} from './components/watchlist/+state/watchlist.effects';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,8 @@ import {FavoritesEffects} from './components/favorites/+state/favorites.effects'
     InfoComponent,
     TextFilterPipe,
     MovieCardComponent,
-    FavoritesComponent
+    FavoritesComponent,
+    WatchlistComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +79,7 @@ import {FavoritesEffects} from './components/favorites/+state/favorites.effects'
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    EffectsModule.forRoot([AccountEffects, SocialEffects, FavoritesEffects]),
+    EffectsModule.forRoot([AccountEffects, SocialEffects, FavoritesEffects, WatchlistEffects]),
     [StoreModule.forRoot(reducers)],
     StoreDevtoolsModule.instrument({
       name: 'MovieBuddy',

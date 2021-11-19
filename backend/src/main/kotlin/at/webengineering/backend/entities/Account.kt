@@ -34,5 +34,12 @@ data class Account (
     @CollectionTable(
             joinColumns = [JoinColumn(name="ACCOUNT_ID")]
     )
-    var favorites: MutableList<VideoProduction>
+    var favorites: MutableList<VideoProduction>,
+
+    @ElementCollection
+    @CollectionTable(
+            joinColumns = [JoinColumn(name="ACCOUNT_ID")]
+    )
+    var watchlist: MutableList<VideoProduction>
+
 )

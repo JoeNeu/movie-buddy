@@ -33,5 +33,11 @@
       <mat-icon *ngIf="!isAlreadyFavorite">favorite_border</mat-icon>
       &emsp;ADD
     </button>
+    <button mat-button color="white" style="background: #141414"
+            (click)="addToWatchlist()">
+      <mat-icon *ngIf="isAlreadyInWatchlist">playlist_remove</mat-icon>
+      <mat-icon *ngIf="!isAlreadyInWatchlist">subscriptions</mat-icon>
+      &emsp;WATCH
+    </button>
   </mat-card-actions>
 </mat-card>

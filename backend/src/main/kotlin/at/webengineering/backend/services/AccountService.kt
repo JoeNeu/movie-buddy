@@ -125,4 +125,20 @@ class AccountService(
     fun getAllFavorites(account: Account): List<VideoProductionDto> {
         return account.favorites.toList().map { vid -> VideoProductionDto(vid.movieId, vid.productionType, vid.uid) };
     }
+
+    fun addToWatchlist(account: Account, videoProduction: VideoProductionDto) {
+        val vidProd = VideoProduction(videoProduction.movieId, videoProduction.productionType, videoProduction.uid);
+        account.watchlist.add(vidProd)
+        accountRepository.save(account)
+    }
+
+    fun removeFromWatchlist(account: Account, videoProduction: VideoProductionDto) {
+        val favoriteToRemove = account.favorites.find { fav -> fav.productionType == videoProduction.productionType && fav.movieId == videoProduction.movieId }
+        account.watchlist.remove(favoriteToRemove)
+        accountRepository.save(account)
+    }
+
+    fun getAllWatchlistItems(account: Account): List<VideoProductionDto> {
+        return account.watchlist.toList().map { vid -> VideoProductionDto(vid.movieId, vid.productionType, vid.uid) };
+    }
 }

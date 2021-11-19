@@ -230,4 +230,59 @@ class AccountController(
             throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.message)
         }
     }
+
+    @GetMapping("/watchlist")
+    fun getAllWatchlistItems(
+            @RequestHeader("token") token: String
+    ): ResponseEntity<List<VideoProductionDto>> {
+        return try {
+            val account = jwtTokenService.getAccountFromToken(token)
+            val watchlist = accountService.getAllWatchlistItems(account)
+            ResponseEntity.ok().body(watchlist)
+        } catch (e: TokenNotValidException) {
+            throw ResponseStatusException(HttpStatus.FORBIDDEN, e.message)
+        } catch (e: AccountNotFoundException) {
+            throw ResponseStatusException(HttpStatus.FORBIDDEN, e.message)
+        } catch (e: Exception) {
+            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.message)
+        }
+    }
+
+    @PutMapping("/watchlist/add")
+    fun addToWatchlist(
+            @RequestHeader("token") token: String,
+            @RequestBody videoProduction: VideoProductionDto
+    ): ResponseEntity<String> {
+        return try {
+            val account = jwtTokenService.getAccountFromToken(token)
+            accountService.addToWatchlist(account, videoProduction)
+            ResponseEntity.ok().body("")
+
+        } catch (e: TokenNotValidException) {
+            throw ResponseStatusException(HttpStatus.FORBIDDEN, e.message)
+        } catch (e: AccountNotFoundException) {
+            throw ResponseStatusException(HttpStatus.FORBIDDEN, e.message)
+        } catch (e: Exception) {
+            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.message)
+        }
+    }
+
+    @PutMapping("/watchlist/remove")
+    fun removeFromWatchlist(
+            @RequestHeader("token") token: String,
+            @RequestBody videoProduction: VideoProductionDto
+    ): ResponseEntity<String> {
+        return try {
+            val account = jwtTokenService.getAccountFromToken(token)
+            accountService.removeFromWatchlist(account, videoProduction)
+            ResponseEntity.ok().body("")
+
+        } catch (e: TokenNotValidException) {
+            throw ResponseStatusException(HttpStatus.FORBIDDEN, e.message)
+        } catch (e: AccountNotFoundException) {
+            throw ResponseStatusException(HttpStatus.FORBIDDEN, e.message)
+        } catch (e: Exception) {
+            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.message)
+        }
+    }
 }
