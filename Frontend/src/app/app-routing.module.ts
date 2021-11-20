@@ -60,12 +60,12 @@ const appRoutes: Routes = [
   {
     path: 'favorites',
     component: FavoritesComponent,
-    canActivate: []
+    canActivate: [IsLoggedInGuardService]
   },
   {
     path: 'watchlist',
     component: WatchlistComponent,
-    canActivate: []
+    canActivate: [IsLoggedInGuardService]
   },
 ];
 
