@@ -6,6 +6,7 @@ import {Store} from "@ngrx/store";
 import {LoginAction, RegisterAction} from "../../account/+state/account.actions";
 import {takeUntil} from "rxjs/operators";
 import {MatTabChangeEvent} from "@angular/material/tabs";
+import {PasswordValidator} from "../../validator/password-validator";
 
 @Component({
   selector: 'app-login',
@@ -32,9 +33,10 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       username: ['', Validators.required],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, PasswordValidator.strong]],
     });
   }
+  // Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')
 
   ngOnInit(): void {
     this.route.queryParams.pipe(
@@ -54,7 +56,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     this.currentTab = tabChangeEvent.index;
   }
 
-  isBlank(): boolean {
+  isBlankLogin(): boolean {
     return (this.usernameControl.invalid || this.passwordControl.invalid)
   }
 
@@ -63,7 +65,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // login() {
-  //   if(this.isBlank()) return
+  //   if(this.isBlankLogin()) return
   //   this.store.dispatch(LoginAction({
   //     loginDto: {
   //       username: this.usernameControl.value,
