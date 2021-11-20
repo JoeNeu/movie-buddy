@@ -8,6 +8,7 @@ import * as fromRoot from '../../../app.store';
 import * as fromFavorites from '../../favorites/+state/favorites.reducer';
 import * as fromWatchlist from '../../watchlist/+state/watchlist.reducer';
 import {AddToWatchlistAction, GetAllWatchlistItemsAction, RemoveFromWatchlistAction} from '../../watchlist/+state/watchlist.actions';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-movie-card',
@@ -25,6 +26,7 @@ export class MovieCardComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store,
+    private router: Router
   ) {
   }
 
@@ -94,6 +96,10 @@ export class MovieCardComponent implements OnInit, OnDestroy {
     }
 
     this.store.dispatch(GetAllWatchlistItemsAction());
+  }
+
+  openMovieCard(id: string) {
+    this.router.navigate(['detail'], { queryParams: { id } })
   }
 
   getProductionType(movie): string {

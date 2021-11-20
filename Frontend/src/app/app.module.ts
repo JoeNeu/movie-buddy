@@ -44,6 +44,8 @@ import {FavoritesComponent} from './components/favorites/favorites.component';
 import {FavoritesEffects} from './components/favorites/+state/favorites.effects';
 import {WatchlistComponent} from './components/watchlist/watchlist.component';
 import {WatchlistEffects} from './components/watchlist/+state/watchlist.effects';
+import {MatMenuModule} from "@angular/material/menu";
+import { DetailComponent } from './components/detail/detail.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,8 @@ import {WatchlistEffects} from './components/watchlist/+state/watchlist.effects'
     TextFilterPipe,
     MovieCardComponent,
     FavoritesComponent,
-    WatchlistComponent
+    WatchlistComponent,
+    DetailComponent
   ],
   imports: [
     BrowserModule,
@@ -91,7 +94,8 @@ import {WatchlistEffects} from './components/watchlist/+state/watchlist.effects'
     MatIconModule,
     MatCheckboxModule,
     MatExpansionModule,
-    IvyCarouselModule
+    IvyCarouselModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent],

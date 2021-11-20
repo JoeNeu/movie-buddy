@@ -67,6 +67,11 @@ const appRoutes: Routes = [
     component: WatchlistComponent,
     canActivate: [IsLoggedInGuardService]
   },
+  {
+    path: 'detail',
+    component: WatchlistComponent,
+    canActivate: []
+  },
 ];
 
 @NgModule({

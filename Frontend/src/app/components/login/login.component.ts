@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Store} from "@ngrx/store";
 import {LoginAction, RegisterAction} from "../../account/+state/account.actions";

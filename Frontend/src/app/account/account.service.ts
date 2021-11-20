@@ -80,6 +80,12 @@ export class AccountService {
     });
   }
 
+  getAllFavoritesFromFriends(token: string, id: string): Observable<VideoProductionModel[]> {
+    return this.http.get<VideoProductionModel[]>(this.accountURL + '/favorites/' + id, {
+      headers: this.commonHttpHeaders.append('token', token)
+    });
+  }
+
   addToFavorites(videoProduction: VideoProductionModel, token: string): Observable<string> {
     return this.http.put<string>(this.accountURL + '/favorites/add', videoProduction ,{
       headers: this.commonHttpHeaders.append('token', token)
