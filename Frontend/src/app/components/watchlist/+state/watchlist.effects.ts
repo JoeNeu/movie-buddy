@@ -22,12 +22,33 @@ export class WatchlistEffects {
   @Effect()
   readonly getAllWatchlistItems$: Observable<Action> = this.actions$.pipe(
     ofType(watchlistActions.GetAllWatchlistItemsAction),
-    exhaustMap(({}) => {
+    switchMap(({}) => {
       return this.coreSelectorService.getCurrentUserToken().pipe(
         switchMap((token: string) => {
           return this.accountService.getAllWatchlistItems(token).pipe(
             map((favorites: VideoProductionModel[]) => {
               return watchlistActions.GetAllWatchlistItemsActionSuccess({favorites})
+            }),
+            catchError(err => {
+              console.warn(err);
+              return EMPTY
+            })
+          );
+        })
+      )
+    })
+  );
+
+
+  @Effect()
+  readonly getAllFavoritesFromFriend$: Observable<Action> = this.actions$.pipe(
+    ofType(watchlistActions.GetAllWatchlistItemsFromFriendAction),
+    switchMap(({account}) => {
+      return this.coreSelectorService.getCurrentUserToken().pipe(
+        switchMap((token: string) => {
+          return this.accountService.getAllWatchlistItemsFromFriends(token, account.id).pipe(
+            map((favorites: VideoProductionModel[]) => {
+              return watchlistActions.GetAllWatchlistItemsFromFriendActionSuccess({favorites})
             }),
             catchError(err => {
               console.warn(err);

@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {AccountModel, LoginDto, PasswordChangeDto, RegisterDto} from '../models/account.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {CoreSelectorService} from "../core/core-selector.service";
 import {VideoProductionModel} from '../models/VideoProduction.model';
 
 @Injectable({
@@ -14,6 +13,7 @@ export class AccountService {
   currUser = new BehaviorSubject<AccountModel>(new AccountModel());
 
   accountURL = 'http://localhost:5000/accounts';
+  socialURL = 'http://localhost:5000/social';
 
   commonHttpHeaders;
 
@@ -81,7 +81,7 @@ export class AccountService {
   }
 
   getAllFavoritesFromFriends(token: string, id: string): Observable<VideoProductionModel[]> {
-    return this.http.get<VideoProductionModel[]>(this.accountURL + '/favorites/' + id, {
+    return this.http.get<VideoProductionModel[]>(this.socialURL + '/favorites?id=' + id, {
       headers: this.commonHttpHeaders.append('token', token)
     });
   }
@@ -99,9 +99,13 @@ export class AccountService {
   }
 
   getAllWatchlistItems(token: string): Observable<VideoProductionModel[]> {
-    console.log('getAll');
-
     return this.http.get<VideoProductionModel[]>(this.accountURL + '/watchlist', {
+      headers: this.commonHttpHeaders.append('token', token)
+    });
+  }
+
+  getAllWatchlistItemsFromFriends(token: string, id: string): Observable<VideoProductionModel[]> {
+    return this.http.get<VideoProductionModel[]>(this.socialURL + '/watchlist?id=' + id, {
       headers: this.commonHttpHeaders.append('token', token)
     });
   }

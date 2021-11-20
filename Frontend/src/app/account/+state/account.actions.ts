@@ -47,3 +47,7 @@ export const GetAllAccountsActionSuccess = createAction(
   '[Accounts] Get all Accounts Success',
   props<{accounts: AccountModel[]}>()
 );
+
+export const LogoutActionSuccess = createAction(
+  '[Account] Logout Success'
+);

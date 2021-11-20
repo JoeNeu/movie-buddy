@@ -22,12 +22,32 @@ export class FavoritesEffects {
   @Effect()
   readonly getAllFavorites$: Observable<Action> = this.actions$.pipe(
     ofType(favoritesActions.GetAllFavoritesAction),
-    exhaustMap(({}) => {
+    switchMap(({}) => {
       return this.coreSelectorService.getCurrentUserToken().pipe(
         switchMap((token: string) => {
           return this.accountService.getAllFavorites(token).pipe(
             map((favorites: VideoProductionModel[]) => {
               return favoritesActions.GetAllFavoritesActionSuccess({favorites})
+            }),
+            catchError(err => {
+              console.warn(err);
+              return EMPTY
+            })
+          );
+        })
+      )
+    })
+  );
+
+  @Effect()
+  readonly getAllFavoritesFromFriend$: Observable<Action> = this.actions$.pipe(
+    ofType(favoritesActions.GetAllFavoritesFromFriendAction),
+    switchMap(({account}) => {
+      return this.coreSelectorService.getCurrentUserToken().pipe(
+        switchMap((token: string) => {
+          return this.accountService.getAllFavoritesFromFriends(token, account.id).pipe(
+            map((favorites: VideoProductionModel[]) => {
+              return favoritesActions.GetAllFavoritesFromFriendActionSuccess({favorites})
             }),
             catchError(err => {
               console.warn(err);

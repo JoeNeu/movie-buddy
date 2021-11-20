@@ -6,6 +6,7 @@ import {select, Store} from "@ngrx/store";
 import {getCurrentUser} from "../../core/+state/core.reducer";
 import {takeUntil} from "rxjs/operators";
 import {AccountModel} from "../../models/account.model";
+import {LogoutActionSuccess} from "../../account/+state/account.actions";
 
 @Component({
   selector: 'app-navbar',
@@ -44,7 +45,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   accountButton() {
-    this.router.navigate(['account']);
+    this.store.dispatch(LogoutActionSuccess())
+    this.router.navigate(['']);
   }
 
   ngOnDestroy() {
