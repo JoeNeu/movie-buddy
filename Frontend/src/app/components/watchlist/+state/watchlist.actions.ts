@@ -1,5 +1,6 @@
 import {createAction, props} from '@ngrx/store';
 import {VideoProductionModel} from '../../../models/VideoProduction.model';
+import {AccountModel} from "../../../models/account.model";
 
 export const GetAllWatchlistItemsAction = createAction(
   '[Watchlist] Get all Watchlist Items',
@@ -7,6 +8,16 @@ export const GetAllWatchlistItemsAction = createAction(
 
 export const GetAllWatchlistItemsActionSuccess = createAction(
   '[Watchlist] Get all Watchlist Items Success',
+  props<{favorites: VideoProductionModel[]}>()
+);
+
+export const GetAllWatchlistItemsFromFriendAction = createAction(
+  '[Watchlist] Get all Watchlist from Friend',
+  props<{account: AccountModel}>()
+);
+
+export const GetAllWatchlistItemsFromFriendActionSuccess = createAction(
+  '[Watchlist] Get all Watchlist from Friend Success',
   props<{favorites: VideoProductionModel[]}>()
 );
 

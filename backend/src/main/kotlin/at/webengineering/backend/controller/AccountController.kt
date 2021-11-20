@@ -1,7 +1,6 @@
 package at.webengineering.backend.controller
 
 import at.webengineering.backend.dtos.*
-import at.webengineering.backend.entities.VideoProduction
 import at.webengineering.backend.exceptions.AccountNotFoundException
 import at.webengineering.backend.exceptions.InvalidLoginCredentialsException
 import at.webengineering.backend.exceptions.TokenNotValidException
@@ -45,7 +44,7 @@ class AccountController(
     fun getAccount(@RequestHeader("token") token: String, @PathVariable id: UUID): ResponseEntity<AccountDto> {
         return try {
             jwtTokenService.getAccountFromToken(token)
-            val accountDto = accountService.findOne(id)
+            val accountDto = accountService.findOneAccountDto(id)
             ResponseEntity.ok().body(accountDto)
 
         } catch (e: TokenNotValidException) {

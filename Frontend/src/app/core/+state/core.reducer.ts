@@ -29,7 +29,7 @@ const CoreReducer = createReducer(
       ...state,
       currentUser: account
     })),
-  on(accountAction.DeleteAccountActionSuccess,
+  on(accountAction.DeleteAccountActionSuccess, accountAction.LogoutActionSuccess,
     (state, {}) => ({
       ...state,
       currentUser: null

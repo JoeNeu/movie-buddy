@@ -1,5 +1,6 @@
 import {createAction, props} from '@ngrx/store';
 import {VideoProductionModel} from '../../../models/VideoProduction.model';
+import {AccountModel} from "../../../models/account.model";
 
 export const GetAllFavoritesAction = createAction(
   '[Favorites] Get all Favorites',
@@ -7,6 +8,16 @@ export const GetAllFavoritesAction = createAction(
 
 export const GetAllFavoritesActionSuccess = createAction(
   '[Favorites] Get all Favorites Success',
+  props<{favorites: VideoProductionModel[]}>()
+);
+
+export const GetAllFavoritesFromFriendAction = createAction(
+  '[Favorites] Get all Favorites from Friend',
+  props<{account: AccountModel}>()
+);
+
+export const GetAllFavoritesFromFriendActionSuccess = createAction(
+  '[Favorites] Get all Favorites from Friend Success',
   props<{favorites: VideoProductionModel[]}>()
 );
 

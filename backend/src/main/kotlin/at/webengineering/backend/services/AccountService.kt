@@ -71,8 +71,12 @@ class AccountService(
 
     fun findAll(): List<AccountDto> = accountRepository.findAll().map { account -> accountMapper.toDto(account) }
 
-    fun findOne(id: UUID): AccountDto {
+    fun findOneAccountDto(id: UUID): AccountDto {
         return accountRepository.findById(id).map { account: Account -> accountMapper.toDto(account) }.get()
+    }
+
+    fun findOneAccount(id: UUID): Account {
+        return accountRepository.findById(id).get()
     }
 
     fun getUserDtoByUsername(username: String): AccountDto {
@@ -111,7 +115,7 @@ class AccountService(
     }
 
     fun addToFavorites(account: Account, videoProduction: VideoProductionDto) {
-        val vidProd = VideoProduction(videoProduction.movieId, videoProduction.productionType, videoProduction.uid);
+        val vidProd = VideoProduction(videoProduction.movieId, videoProduction.productionType, videoProduction.uid)
         account.favorites.add(vidProd)
         accountRepository.save(account)
     }
@@ -123,11 +127,15 @@ class AccountService(
     }
 
     fun getAllFavorites(account: Account): List<VideoProductionDto> {
-        return account.favorites.toList().map { vid -> VideoProductionDto(vid.movieId, vid.productionType, vid.uid) };
+        return account.favorites.toList().map { vid -> VideoProductionDto(vid.movieId, vid.productionType, vid.uid) }
+    }
+
+    fun getAllFavoritesFromFriend(id: UUID): List<VideoProductionDto> {
+        return getAllFavorites(findOneAccount(id))
     }
 
     fun addToWatchlist(account: Account, videoProduction: VideoProductionDto) {
-        val vidProd = VideoProduction(videoProduction.movieId, videoProduction.productionType, videoProduction.uid);
+        val vidProd = VideoProduction(videoProduction.movieId, videoProduction.productionType, videoProduction.uid)
         account.watchlist.add(vidProd)
         accountRepository.save(account)
     }
@@ -139,6 +147,10 @@ class AccountService(
     }
 
     fun getAllWatchlistItems(account: Account): List<VideoProductionDto> {
-        return account.watchlist.toList().map { vid -> VideoProductionDto(vid.movieId, vid.productionType, vid.uid) };
+        return account.watchlist.toList().map { vid -> VideoProductionDto(vid.movieId, vid.productionType, vid.uid) }
+    }
+
+    fun getAllWatchlistItemsFromFriend(id: UUID): List<VideoProductionDto> {
+        return getAllWatchlistItems(findOneAccount(id))
     }
 }
