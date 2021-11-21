@@ -3,14 +3,13 @@ import {Actions, Effect, ofType} from '@ngrx/effects';
 import {AccountService} from '../../account/account.service';
 import {CoreSelectorService} from '../../core/core-selector.service';
 import {Action} from '@ngrx/store';
-import {combineLatest, EMPTY, Observable, zip} from 'rxjs';
+import {combineLatest, EMPTY, Observable, of, zip} from 'rxjs';
 import * as socialActions from './social.actions';
-import {catchError, exhaustMap, map, mergeMap, switchMap} from 'rxjs/operators';
+import {catchError, exhaustMap, map, switchMap} from 'rxjs/operators';
 import {AccountModel} from '../../models/account.model';
 import {SocialService} from "../social.service";
 import {MessageModel} from "../../models/message.model";
 import {SocialSelectorService} from "../social-selector.service";
-import {ResolveMoviesAction} from "./social.actions";
 import {MovieService} from "../../movies/movie.service";
 import {tmdbMovie, tmdbTvShow} from "../../models/the-movie-db.model";
 
@@ -129,6 +128,7 @@ export class SocialEffects {
         })
       })
       return zip(
+        of({}),
         ...movies.map((movie: number) => this.movieService.getMovieById(movie)),
         ...shows.map(show => this.movieService.getTvShowById(show))
       ).pipe(
