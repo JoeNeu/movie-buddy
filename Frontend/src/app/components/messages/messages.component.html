@@ -18,7 +18,7 @@
   <ng-template #noFriends>You follow no Friends. Add more in the Social Tab</ng-template>
 
   <div *ngIf="selectedFriend" class="mt-3">
-    <mat-grid-list class="mt-2">
+    <mat-grid-list class="mt-2" cols="1">
       <mat-list-item *ngFor="let message of selectedFriend.messages" class="mb-5 mt-1">
         <mat-card class="w-100 mb-3" style="display: flex;">
           <div style="flex: 1" *ngIf="message.sender != selectedFriend.id"></div>
