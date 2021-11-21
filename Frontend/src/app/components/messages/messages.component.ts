@@ -37,7 +37,12 @@ export class MessagesComponent implements OnInit, OnDestroy {
 
     this.socialSelectorService.getAllFriendsFromStore().pipe(
       takeUntil(this.unsubscribe$)
-    ).subscribe((friends: AccountModel[]) => this.friends = friends);
+    ).subscribe((friends: AccountModel[]) => {
+      this.friends = friends
+      if(this.selectedFriend) {
+        this.selectedFriend = friends.find(friend => friend.id === this.selectedFriend.id)
+      }
+    });
   }
 
   setSelectedFriend(user: AccountModel) {
@@ -48,10 +53,8 @@ export class MessagesComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(MessageDialogComponent, {
       width: '250px',
       data: {
-        receiverName: this.selectedFriend.username,
         receiver: this.selectedFriend.id,
-        sender: this.yourId,
-      } as MessageDialogData,
+      },
     });
 
     dialogRef.afterClosed().subscribe((reload: boolean) => {

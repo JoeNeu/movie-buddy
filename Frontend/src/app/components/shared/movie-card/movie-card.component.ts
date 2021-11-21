@@ -9,6 +9,9 @@ import * as fromFavorites from '../../favorites/+state/favorites.reducer';
 import * as fromWatchlist from '../../watchlist/+state/watchlist.reducer';
 import {AddToWatchlistAction, GetAllWatchlistItemsAction, RemoveFromWatchlistAction} from '../../watchlist/+state/watchlist.actions';
 import {Router} from "@angular/router";
+import {MessageDialogComponent} from "../../messages/message-dialog/message-dialog.component";
+import {MessageDialogData} from "../../../models/message.model";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-movie-card',
@@ -17,6 +20,7 @@ import {Router} from "@angular/router";
 })
 export class MovieCardComponent implements OnInit, OnDestroy {
   @Input() movie; // With Type does some problems
+  @Input() loggedIn = false;
   favorites = [];
   watchlist = [];
   isAlreadyFavorite = false;
@@ -26,39 +30,41 @@ export class MovieCardComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {
   }
 
   ngOnInit(): void {
+    if(this.loggedIn) {
+      this.store.pipe(
+        takeUntil(this.unsubscribe$),
+        select(createSelector(
+          fromRoot.favoritesState, fromFavorites.getAllFavorites()
+        ))
+      ).subscribe((favorites: VideoProductionModel[]) => {
+        this.favorites = favorites;
+        this.isAlreadyFavorite = this.favorites
+          .find((fav) => {
+            const productionType = this.getProductionType(this.movie);
+            return fav.productionType === productionType && fav.movieId === this.movie.id;
+          });
+      });
 
-    this.store.pipe(
-      takeUntil(this.unsubscribe$),
-      select(createSelector(
-        fromRoot.favoritesState, fromFavorites.getAllFavorites()
-      ))
-    ).subscribe((favorites: VideoProductionModel[]) => {
-      this.favorites = favorites;
-      this.isAlreadyFavorite = this.favorites
-        .find((fav) => {
-          const productionType = this.getProductionType(this.movie);
-          return fav.productionType === productionType && fav.movieId === this.movie.id;
-        });
-    });
-
-    this.store.pipe(
-      takeUntil(this.unsubscribe$),
-      select(createSelector(
-        fromRoot.watchlistState, fromWatchlist.getAllWatchlistItems()
-      ))
-    ).subscribe((watchlistItems: VideoProductionModel[]) => {
-      this.watchlist = watchlistItems;
-      this.isAlreadyInWatchlist = this.watchlist
-        .find((item) => {
-          const productionType = this.getProductionType(this.movie);
-          return item.productionType === productionType && item.movieId === this.movie.id;
-        });
-    });
+      this.store.pipe(
+        takeUntil(this.unsubscribe$),
+        select(createSelector(
+          fromRoot.watchlistState, fromWatchlist.getAllWatchlistItems()
+        ))
+      ).subscribe((watchlistItems: VideoProductionModel[]) => {
+        this.watchlist = watchlistItems;
+        this.isAlreadyInWatchlist = this.watchlist
+          .find((item) => {
+            const productionType = this.getProductionType(this.movie);
+            return item.productionType === productionType && item.movieId === this.movie.id;
+          });
+      });
+    }
   }
 
   addToFavorites() {
@@ -103,6 +109,19 @@ export class MovieCardComponent implements OnInit, OnDestroy {
 
   getProductionType(movie): string {
     return movie.name ? 'TVSHOW' : 'MOVIE';
+  }
+
+  goToProfile() {
+    this.router.navigate(['account']);
+  }
+
+  shareWithFriends() {
+    const dialogRef = this.dialog.open(MessageDialogComponent, {
+      width: '250px',
+      data: {
+        movieId: this.movie.id
+      }
+    });
   }
 
   ngOnDestroy() {

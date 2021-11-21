@@ -6,8 +6,7 @@ export class MessageModel {
 }
 
 export class MessageDialogData {
-  receiverName: string
+  receiverName?: string
   sender: string
-  receiver: string
-  movieId?: number
+  receiver?: string
 }

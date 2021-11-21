@@ -1,16 +1,21 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MovieService} from '../../movies/movie.service';
 import {tmdbModel} from '../../models/the-movie-db.model';
 import {MatAccordion} from '@angular/material/expansion';
 import {FormControl} from '@angular/forms';
 import {ViewportScroller} from "@angular/common";
+import {Store} from "@ngrx/store";
+import {getCurrentUser} from "../../core/+state/core.reducer";
+import {takeUntil} from "rxjs/operators";
+import {AccountModel} from "../../models/account.model";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
   @ViewChild(MatAccordion) accordion: MatAccordion;
   @ViewChild("movieAnchor") MyProp: ElementRef;
 
@@ -20,12 +25,23 @@ export class SearchComponent implements OnInit {
   movieSearchResult = [];
   tvShowSearchResult = [];
 
+  loggedIn = false;
+  currentUser;
+  private unsubscribe$ = new Subject();
+
   constructor(
-    private movieService: MovieService
+    private movieService: MovieService,
+    private store: Store
   ) {
   }
 
   ngOnInit(): void {
+    this.store.select(getCurrentUser).pipe(takeUntil(this.unsubscribe$)).subscribe((user: AccountModel) => {
+      if(user) {
+        this.loggedIn = true;
+        this.currentUser = user;
+      }
+    })
   }
 
   enterSubmit(event): void {
@@ -57,6 +73,11 @@ export class SearchComponent implements OnInit {
           });
         }
       );
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
 }

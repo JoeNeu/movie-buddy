@@ -2,7 +2,7 @@
   <div *ngIf="friends.length > 0; else noFriends">
     <button mat-raised-button
             [matMenuTriggerFor]="menu">
-      {{selectedFriend ? selectedFriend.username : 'List of Friends'}}
+      {{selectedFriend ? ('You are chatting with ' + selectedFriend.username) : 'List of Friends'}}
     </button>
     <button mat-raised-button
             color="primary"

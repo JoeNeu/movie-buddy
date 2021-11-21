@@ -1,9 +1,21 @@
-<h1 mat-dialog-title>Message {{data.receiverName}}</h1>
-<div mat-dialog-content>
-  <mat-form-field appearance="fill">
-    <input matInput [(ngModel)]="messageText">
-  </mat-form-field>
+<div *ngIf="selectedFriend; else selectFriend">
+  <h1 mat-dialog-title>Message {{selectedFriend.username}}</h1>
+  <div mat-dialog-content>
+    <mat-form-field appearance="fill">
+      <input matInput [(ngModel)]="messageText">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="sendMessage()">Send</button>
+  </div>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="sendMessage()">Send</button>
-</div>
+
+<ng-template #selectFriend>
+  <div *ngIf="friends.length > 0; else noFriends">
+    <button mat-raised-button [matMenuTriggerFor]="menu">{{selectedFriend ? selectedFriend.username : 'List of Friends'}}</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item *ngFor="let friend of friends" (click)="setFriend(friend)">{{friend.username}}</button>
+    </mat-menu>
+  </div>
+  <ng-template #noFriends>You follow no Friends. Add more in the Social Tab</ng-template>
+</ng-template>
