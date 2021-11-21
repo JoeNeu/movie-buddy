@@ -48,7 +48,7 @@ const appRoutes: Routes = [
     canActivate: [IsLoggedInGuardService]
   },
   {
-    path: 'message',
+    path: 'messages',
     component: MessagesComponent,
     canActivate: [IsLoggedInGuardService]
   },

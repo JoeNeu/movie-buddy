@@ -80,7 +80,6 @@ export class MovieCardComponent implements OnInit, OnDestroy {
   }
 
   addToWatchlist() {
-    console.log('add to watchlist', this.isAlreadyInWatchlist);
     const productionType = this.getProductionType(this.movie);
 
     const favorite: VideoProductionModel = {

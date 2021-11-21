@@ -1,15 +1,13 @@
 package at.webengineering.backend.services
 
-import at.webengineering.backend.dtos.AccountCreationDto
-import at.webengineering.backend.dtos.AccountDto
+import at.webengineering.backend.dtos.*
 import at.webengineering.backend.entities.Account
+import at.webengineering.backend.entities.Message
 import at.webengineering.backend.exceptions.InvalidLoginCredentialsException
 import at.webengineering.backend.exceptions.UsernameAlreadyExistsException
 import at.webengineering.backend.mapper.AccountMapper
 import at.webengineering.backend.repositories.IAccountRepository
 import at.webengineering.backend.utils.HashUtil.hash
-import at.webengineering.backend.dtos.PasswordChangeDto
-import at.webengineering.backend.dtos.VideoProductionDto
 import at.webengineering.backend.entities.VideoProduction
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -141,7 +139,7 @@ class AccountService(
     }
 
     fun removeFromWatchlist(account: Account, videoProduction: VideoProductionDto) {
-        val favoriteToRemove = account.favorites.find { fav -> fav.productionType == videoProduction.productionType && fav.movieId == videoProduction.movieId }
+        val favoriteToRemove = account.watchlist.find { fav -> fav.productionType == videoProduction.productionType && fav.movieId == videoProduction.movieId }
         account.watchlist.remove(favoriteToRemove)
         accountRepository.save(account)
     }
@@ -152,5 +150,19 @@ class AccountService(
 
     fun getAllWatchlistItemsFromFriend(id: UUID): List<VideoProductionDto> {
         return getAllWatchlistItems(findOneAccount(id))
+    }
+
+    fun getAllMessages(account: Account): List<MessageDto> {
+        return account.messages.toList().map { message -> MessageDto(message.sender, message.receiver, message.text, message.movieId) }
+    }
+
+    fun saveMessage(account: Account, messageDto: MessageDto) {
+        val message = Message(sender = messageDto.sender, receiver = messageDto.receiver, text = messageDto.text, movieId = messageDto.movieId ?: 0)
+        account.messages.add(message)
+        accountRepository.save(account)
+
+        val receiver = findOneAccount(UUID.fromString(messageDto.receiver))
+        receiver.messages.add(message)
+        accountRepository.save(receiver)
     }
 }

@@ -1,5 +1,6 @@
 import {createAction, props} from '@ngrx/store';
 import {AccountModel} from '../../models/account.model';
+import {MessageModel} from "../../models/message.model";
 
 export const GetAllFriendsAction = createAction(
   '[Social] Get all Friends',
@@ -28,4 +29,22 @@ export const DeleteFriendAction = createAction(
 export const DeleteFriendActionSuccess = createAction(
   '[Social] Delete Friend Success',
   props<{id: string}>()
+);
+
+export const GetAllMessagesAction = createAction(
+  '[Social] Get all Messages',
+);
+
+export const GetAllMessagesActionSuccess = createAction(
+  '[Social] Get all Messages Success',
+  props<{accounts: AccountModel[]}>()
+);
+
+export const SendMessageAction = createAction(
+  '[Social] Send Messages',
+  props<{message: MessageModel}>()
+);
+
+export const SendMessageActionSuccess = createAction(
+  '[Social] Send Messages Success'
 );

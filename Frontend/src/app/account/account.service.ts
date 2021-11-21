@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {AccountModel, LoginDto, PasswordChangeDto, RegisterDto} from '../models/account.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {VideoProductionModel} from '../models/VideoProduction.model';
@@ -8,13 +8,7 @@ import {VideoProductionModel} from '../models/VideoProduction.model';
   providedIn: 'root'
 })
 export class AccountService {
-
-  isLoggedIn = new BehaviorSubject<boolean>(false);
-  currUser = new BehaviorSubject<AccountModel>(new AccountModel());
-
   accountURL = 'http://localhost:5000/accounts';
-  socialURL = 'http://localhost:5000/social';
-
   commonHttpHeaders;
 
   constructor(
@@ -80,12 +74,6 @@ export class AccountService {
     });
   }
 
-  getAllFavoritesFromFriends(token: string, id: string): Observable<VideoProductionModel[]> {
-    return this.http.get<VideoProductionModel[]>(this.socialURL + '/favorites?id=' + id, {
-      headers: this.commonHttpHeaders.append('token', token)
-    });
-  }
-
   addToFavorites(videoProduction: VideoProductionModel, token: string): Observable<string> {
     return this.http.put<string>(this.accountURL + '/favorites/add', videoProduction ,{
       headers: this.commonHttpHeaders.append('token', token)
@@ -104,21 +92,13 @@ export class AccountService {
     });
   }
 
-  getAllWatchlistItemsFromFriends(token: string, id: string): Observable<VideoProductionModel[]> {
-    return this.http.get<VideoProductionModel[]>(this.socialURL + '/watchlist?id=' + id, {
-      headers: this.commonHttpHeaders.append('token', token)
-    });
-  }
-
   addToWatchlist(videoProduction: VideoProductionModel, token: string): Observable<string> {
-    console.log('add');
     return this.http.put<string>(this.accountURL + '/watchlist/add', videoProduction ,{
       headers: this.commonHttpHeaders.append('token', token)
     });
   }
 
   removeFromWatchlist(videoProduction: VideoProductionModel, token: string): Observable<string> {
-    console.log('remove');
     return this.http.put<string>(this.accountURL + '/watchlist/remove', videoProduction ,{
       headers: this.commonHttpHeaders.append('token', token)
     });

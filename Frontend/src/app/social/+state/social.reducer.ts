@@ -31,6 +31,10 @@ const AccountReducer = createReducer(
     (state, {id}) => ({
       ...SocialAdapter.removeOne(id, state)
     })),
+  on(socialAction.GetAllMessagesActionSuccess,
+    (state, {accounts}) => ({
+      ...SocialAdapter.upsertMany(accounts, state)
+    })),
 );
 
 export const {
@@ -41,4 +45,7 @@ export const {
 
 export function getAllFriends(): (s: SocialState) => AccountModel[] {
   return (state: SocialState) => selectAllSocial(state)
+}
+export function getFriend(id: string): (s: SocialState) => AccountModel {
+  return (state: SocialState) => selectAllSocial(state).find(value => value.id === id)
 }

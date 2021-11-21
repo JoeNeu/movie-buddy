@@ -7,6 +7,7 @@ import {catchError, exhaustMap, map, switchMap} from 'rxjs/operators';
 import {VideoProductionModel} from '../../../models/VideoProduction.model';
 import {AccountService} from '../../../account/account.service';
 import {CoreSelectorService} from '../../../core/core-selector.service';
+import {SocialService} from "../../../social/social.service";
 
 @Injectable(
 )
@@ -15,6 +16,7 @@ export class WatchlistEffects {
   constructor(
     private actions$: Actions,
     private accountService: AccountService,
+    private socialService: SocialService,
     private coreSelectorService: CoreSelectorService,
   ) {
   }
@@ -46,7 +48,7 @@ export class WatchlistEffects {
     switchMap(({account}) => {
       return this.coreSelectorService.getCurrentUserToken().pipe(
         switchMap((token: string) => {
-          return this.accountService.getAllWatchlistItemsFromFriends(token, account.id).pipe(
+          return this.socialService.getAllWatchlistItemsFromFriends(token, account.id).pipe(
             map((favorites: VideoProductionModel[]) => {
               return watchlistActions.GetAllWatchlistItemsFromFriendActionSuccess({favorites})
             }),

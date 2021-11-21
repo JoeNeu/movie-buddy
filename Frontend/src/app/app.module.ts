@@ -46,6 +46,7 @@ import {WatchlistComponent} from './components/watchlist/watchlist.component';
 import {WatchlistEffects} from './components/watchlist/+state/watchlist.effects';
 import {MatMenuModule} from "@angular/material/menu";
 import { DetailComponent } from './components/detail/detail.component';
+import { MessageDialogComponent } from './components/messages/message-dialog/message-dialog.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { DetailComponent } from './components/detail/detail.component';
     MovieCardComponent,
     FavoritesComponent,
     WatchlistComponent,
-    DetailComponent
+    DetailComponent,
+    MessageDialogComponent
   ],
   imports: [
     BrowserModule,
