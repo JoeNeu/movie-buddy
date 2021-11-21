@@ -5,11 +5,14 @@ import {CoreSelectorService} from '../../core/core-selector.service';
 import {Action} from '@ngrx/store';
 import {combineLatest, EMPTY, Observable, zip} from 'rxjs';
 import * as socialActions from './social.actions';
-import {catchError, exhaustMap, map, switchMap} from 'rxjs/operators';
+import {catchError, exhaustMap, map, mergeMap, switchMap} from 'rxjs/operators';
 import {AccountModel} from '../../models/account.model';
 import {SocialService} from "../social.service";
 import {MessageModel} from "../../models/message.model";
 import {SocialSelectorService} from "../social-selector.service";
+import {ResolveMoviesAction} from "./social.actions";
+import {MovieService} from "../../movies/movie.service";
+import {tmdbMovie, tmdbTvShow} from "../../models/the-movie-db.model";
 
 @Injectable(
 )
@@ -20,7 +23,8 @@ export class SocialEffects {
     private accountService: AccountService,
     private socialService: SocialService,
     private coreSelectorService: CoreSelectorService,
-    private socialSelectorService: SocialSelectorService
+    private socialSelectorService: SocialSelectorService,
+    private movieService: MovieService
   ) {
   }
 
@@ -98,7 +102,7 @@ export class SocialEffects {
               friends.forEach((friend, index) => {
                 friends[index].messages = messages.filter(message => message.sender === friend.id || message.receiver === friend.id)
               })
-              return socialActions.GetAllMessagesActionSuccess({accounts: friends})
+              return socialActions.ResolveMoviesAction({accounts: friends})
             }),
             catchError(err => {
               console.warn(err);
@@ -107,6 +111,43 @@ export class SocialEffects {
           );
         })
       )
+    })
+  );
+
+  @Effect()
+  readonly resolveMovies$: Observable<Action> = this.actions$.pipe(
+    ofType(socialActions.ResolveMoviesAction),
+    switchMap(({accounts}) => {
+      let movies = []
+      let shows = []
+      accounts.forEach((friend: AccountModel) => {
+        friend.messages.forEach((message: MessageModel) => {
+          if (message.type === 'MOVIE')
+            movies.push(message.movieId)
+          if (message.type === 'TVSHOW')
+            shows.push(message.movieId)
+        })
+      })
+      return zip(
+        ...movies.map((movie: number) => this.movieService.getMovieById(movie)),
+        ...shows.map(show => this.movieService.getTvShowById(show))
+      ).pipe(
+        map((movies: (tmdbMovie|tmdbTvShow)[]) => {
+          const friends = accounts.map((friend: AccountModel) => {
+            return {...friend, messages: friend.messages.map((message: MessageModel) => {
+                if(message.type === 'MOVIE' || message.type === 'TVSHOW') {
+                  return { ...message, resolvedMovie: movies.find((val: (tmdbMovie|tmdbTvShow)) => val.id === message.movieId)}
+                }
+                return message
+              })}
+          })
+          return socialActions.GetAllMessagesActionSuccess({accounts: friends})
+        }),
+        catchError(err => {
+          console.warn(err);
+          return EMPTY
+        })
+      );
     })
   );
 

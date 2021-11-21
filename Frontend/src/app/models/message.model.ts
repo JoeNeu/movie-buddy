@@ -3,10 +3,6 @@ export class MessageModel {
   receiver: string
   text: string
   movieId?: number
-}
-
-export class MessageDialogData {
-  receiverName?: string
-  sender: string
-  receiver?: string
+  type?: string
+  resolvedMovie?: any
 }

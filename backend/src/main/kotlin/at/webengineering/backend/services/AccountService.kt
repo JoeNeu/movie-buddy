@@ -153,11 +153,11 @@ class AccountService(
     }
 
     fun getAllMessages(account: Account): List<MessageDto> {
-        return account.messages.toList().map { message -> MessageDto(message.sender, message.receiver, message.text, message.movieId) }
+        return account.messages.toList().map { message -> MessageDto(message.sender, message.receiver, message.text, message.movieId, message.type) }
     }
 
     fun saveMessage(account: Account, messageDto: MessageDto) {
-        val message = Message(sender = messageDto.sender, receiver = messageDto.receiver, text = messageDto.text, movieId = messageDto.movieId ?: 0)
+        val message = Message(sender = messageDto.sender, receiver = messageDto.receiver, text = messageDto.text, movieId = messageDto.movieId ?: 0, type = messageDto.type ?: "")
         account.messages.add(message)
         accountRepository.save(account)
 

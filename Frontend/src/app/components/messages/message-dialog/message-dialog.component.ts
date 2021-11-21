@@ -29,6 +29,7 @@ export class MessageDialogComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this.message.movieId = data.movieId ? data.movieId : 0;
+    this.message.type = data.type ? data.type : '';
   }
 
   ngOnInit(): void {

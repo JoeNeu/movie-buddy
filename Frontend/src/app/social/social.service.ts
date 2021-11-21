@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {VideoProductionModel} from "../models/VideoProduction.model";
 import {MessageModel} from "../models/message.model";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,13 @@ export class SocialService {
   getAllMessages(token: string): Observable<MessageModel[]> {
     return this.http.get<MessageModel[]>(this.socialURL + '/messages', {
       headers: this.commonHttpHeaders.append('token', token)
-    });
+    }).pipe(
+      map((messages: MessageModel[]) => {
+        return messages.map((message: MessageModel) => {
+          return {...message, resolvedMovie: null}
+        })
+      })
+    );
   }
 
   sendMessage(token: string, message: MessageModel) {

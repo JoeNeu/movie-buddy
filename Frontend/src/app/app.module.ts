@@ -47,6 +47,7 @@ import {WatchlistEffects} from './components/watchlist/+state/watchlist.effects'
 import {MatMenuModule} from "@angular/material/menu";
 import { DetailComponent } from './components/detail/detail.component';
 import { MessageDialogComponent } from './components/messages/message-dialog/message-dialog.component';
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [
@@ -68,37 +69,38 @@ import { MessageDialogComponent } from './components/messages/message-dialog/mes
     DetailComponent,
     MessageDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatCardModule,
-    MatTabsModule,
-    FormsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    EffectsModule.forRoot([AccountEffects, SocialEffects, FavoritesEffects, WatchlistEffects]),
-    [StoreModule.forRoot(reducers)],
-    StoreDevtoolsModule.instrument({
-      name: 'MovieBuddy',
-      maxAge: 25,
-    }),
-    MatSidenavModule,
-    MatListModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatCheckboxModule,
-    MatExpansionModule,
-    IvyCarouselModule,
-    MatMenuModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatCardModule,
+        MatTabsModule,
+        FormsModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        EffectsModule.forRoot([AccountEffects, SocialEffects, FavoritesEffects, WatchlistEffects]),
+        [StoreModule.forRoot(reducers)],
+        StoreDevtoolsModule.instrument({
+            name: 'MovieBuddy',
+            maxAge: 25,
+        }),
+        MatSidenavModule,
+        MatListModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatCheckboxModule,
+        MatExpansionModule,
+        IvyCarouselModule,
+        MatMenuModule,
+        MatGridListModule
+    ],
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: []

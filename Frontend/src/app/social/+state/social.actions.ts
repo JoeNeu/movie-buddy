@@ -35,6 +35,11 @@ export const GetAllMessagesAction = createAction(
   '[Social] Get all Messages',
 );
 
+export const ResolveMoviesAction = createAction(
+  '[Social] Get all Messages -> ResolveMovies',
+  props<{accounts: AccountModel[]}>()
+);
+
 export const GetAllMessagesActionSuccess = createAction(
   '[Social] Get all Messages Success',
   props<{accounts: AccountModel[]}>()

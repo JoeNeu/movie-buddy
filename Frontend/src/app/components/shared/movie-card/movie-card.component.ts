@@ -10,7 +10,6 @@ import * as fromWatchlist from '../../watchlist/+state/watchlist.reducer';
 import {AddToWatchlistAction, GetAllWatchlistItemsAction, RemoveFromWatchlistAction} from '../../watchlist/+state/watchlist.actions';
 import {Router} from "@angular/router";
 import {MessageDialogComponent} from "../../messages/message-dialog/message-dialog.component";
-import {MessageDialogData} from "../../../models/message.model";
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({
@@ -119,7 +118,8 @@ export class MovieCardComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(MessageDialogComponent, {
       width: '250px',
       data: {
-        movieId: this.movie.id
+        movieId: this.movie.id,
+        type: this.getProductionType(this.movie)
       }
     });
   }

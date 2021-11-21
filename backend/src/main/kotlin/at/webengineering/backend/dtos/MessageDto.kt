@@ -5,4 +5,5 @@ data class MessageDto (
     val receiver: String,
     val text: String,
     val movieId: Int?,
+    val type: String?
 )

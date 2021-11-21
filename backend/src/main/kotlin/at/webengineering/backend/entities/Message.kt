@@ -17,4 +17,7 @@ data class Message(
 
     @Column(nullable = true)
     var movieId: Int?,
+
+    @Column(nullable = true)
+    var type: String?,
 )

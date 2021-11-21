@@ -3,6 +3,7 @@ import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {tmdbModel, tmdbMovie, tmdbTvShow} from '../models/the-movie-db.model';
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -38,10 +39,18 @@ export class MovieService {
   }
 
   getMovieById(id): Observable<tmdbMovie> {
-    return this.http.get<tmdbMovie>(`${this.themoviedbUrl}/movie/${id}?api_key=${this.themoviedbApiKey}`);
+    return this.http.get<tmdbMovie>(`${this.themoviedbUrl}/movie/${id}?api_key=${this.themoviedbApiKey}`).pipe(
+      map(movie => {
+        return {...movie, path: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + movie.poster_path}
+      })
+    );
   }
 
   getTvShowById(id): Observable<tmdbTvShow> {
-    return this.http.get<tmdbTvShow>(`${this.themoviedbUrl}/tv/${id}?api_key=${this.themoviedbApiKey}`);
+    return this.http.get<tmdbTvShow>(`${this.themoviedbUrl}/tv/${id}?api_key=${this.themoviedbApiKey}`).pipe(
+      map(movie => {
+        return {...movie, path: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + movie.poster_path}
+      })
+    );
   }
 }
