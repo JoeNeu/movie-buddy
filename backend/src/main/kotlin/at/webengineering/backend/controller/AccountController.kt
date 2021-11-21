@@ -6,13 +6,14 @@ import at.webengineering.backend.exceptions.InvalidLoginCredentialsException
 import at.webengineering.backend.exceptions.TokenNotValidException
 import at.webengineering.backend.exceptions.UsernameAlreadyExistsException
 import at.webengineering.backend.services.AccountService
-
 import at.webengineering.backend.services.JwtTokenService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
+import java.time.Instant
 import java.util.*
+
 
 @CrossOrigin(origins = ["http://localhost:4200"])
 @RestController
@@ -21,6 +22,9 @@ class AccountController(
     val accountService: AccountService,
     val jwtTokenService: JwtTokenService
 ) {
+    val loginRequests = HashMap<String, Int>()
+    val timout = HashMap<String, Long>()
+    val zero: Long = 0
 
     @GetMapping
     fun getAllAccounts(
@@ -74,11 +78,28 @@ class AccountController(
     @PostMapping("/login")
     fun login(@RequestBody loginDto: LoginDto): ResponseEntity<AccountDto> {
         return try {
+            val timeout = timout.getOrDefault(loginDto.username, 0)
+            if (timeout != zero) {
+                val instant = Instant.now()
+                val timeStampMillis = instant.toEpochMilli()
+                if (timeout > timeStampMillis) {
+                    throw Exception("Banned")
+                }
+                timout[loginDto.username] = zero
+            }
             accountService.login(loginDto)
             val user = accountService.getUserDtoByUsername(loginDto.username)
+            loginRequests[loginDto.username] = 0
             ResponseEntity.ok().body(user)
 
         } catch (e: InvalidLoginCredentialsException) {
+            loginRequests[loginDto.username] = loginRequests.getOrDefault(loginDto.username, 0) + 1
+            if (loginRequests.getOrDefault(loginDto.username, 0) == 5) {
+                println("Banned for 10 Minutes")
+                val instant = Instant.now()
+                val timeStampMillis = instant.toEpochMilli() + 600000
+                timout[loginDto.username] = timeStampMillis
+            }
             throw ResponseStatusException(HttpStatus.UNAUTHORIZED, e.message)
         } catch (e: Exception) {
             throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.message)
