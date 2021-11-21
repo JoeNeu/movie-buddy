@@ -3,12 +3,14 @@ package at.webengineering.backend.services
 import at.webengineering.backend.dtos.*
 import at.webengineering.backend.entities.Account
 import at.webengineering.backend.entities.Message
+import at.webengineering.backend.entities.Rating
 import at.webengineering.backend.exceptions.InvalidLoginCredentialsException
 import at.webengineering.backend.exceptions.UsernameAlreadyExistsException
 import at.webengineering.backend.mapper.AccountMapper
 import at.webengineering.backend.repositories.IAccountRepository
 import at.webengineering.backend.utils.HashUtil.hash
 import at.webengineering.backend.entities.VideoProduction
+import at.webengineering.backend.repositories.IMovieRatingRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -17,12 +19,13 @@ import java.util.*
 @Service
 class AccountService(
     private val accountRepository: IAccountRepository,
+    private val ratingRepository: IMovieRatingRepository,
     private val accountMapper: AccountMapper
 ) {
 
     val logger: Logger = LoggerFactory.getLogger(AccountService::class.java)
 
-    fun login(loginDto: at.webengineering.backend.dtos.LoginDto) {
+    fun login(loginDto: LoginDto) {
         if (!passwordCorrect(loginDto.username, loginDto.password))
             throw InvalidLoginCredentialsException()
     }
@@ -164,5 +167,15 @@ class AccountService(
         val receiver = findOneAccount(UUID.fromString(messageDto.receiver))
         receiver.messages.add(message)
         accountRepository.save(receiver)
+    }
+
+    fun getRating(id: Int): Rating {
+        return ratingRepository.findById(id).get()
+    }
+
+    fun increaseRating(rating: Rating): Rating {
+        rating.count++
+        ratingRepository.save(rating)
+        return rating
     }
 }

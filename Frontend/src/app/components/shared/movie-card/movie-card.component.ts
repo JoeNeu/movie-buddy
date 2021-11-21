@@ -2,8 +2,8 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {createSelector, select, Store} from '@ngrx/store';
 import {VideoProductionModel} from '../../../models/VideoProduction.model';
 import {AddToFavoritesAction, GetAllFavoritesAction, RemoveFromFavoritesAction} from '../../favorites/+state/favorites.actions';
-import {takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs';
+import {first, map, takeUntil} from 'rxjs/operators';
+import {Observable, Subject} from 'rxjs';
 import * as fromRoot from '../../../app.store';
 import * as fromFavorites from '../../favorites/+state/favorites.reducer';
 import * as fromWatchlist from '../../watchlist/+state/watchlist.reducer';
@@ -11,6 +11,8 @@ import {AddToWatchlistAction, GetAllWatchlistItemsAction, RemoveFromWatchlistAct
 import {Router} from "@angular/router";
 import {MessageDialogComponent} from "../../messages/message-dialog/message-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {SocialService} from "../../../social/social.service";
+import {RatingModel} from "../../../models/message.model";
 
 @Component({
   selector: 'app-movie-card',
@@ -25,16 +27,24 @@ export class MovieCardComponent implements OnInit, OnDestroy {
   isAlreadyFavorite = false;
   isAlreadyInWatchlist = false;
 
+  rating: Observable<number>;
+
   private unsubscribe$ = new Subject();
 
   constructor(
     private store: Store,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private socialService: SocialService
   ) {
   }
 
   ngOnInit(): void {
+
+    this.rating = this.socialService.getRating(this.movie.id).pipe(first(),
+      map((val: RatingModel) => val.count)
+    );
+
     if(this.loggedIn) {
       this.store.pipe(
         takeUntil(this.unsubscribe$),
@@ -122,6 +132,12 @@ export class MovieCardComponent implements OnInit, OnDestroy {
         type: this.getProductionType(this.movie)
       }
     });
+  }
+
+  likeMovie() {
+    this.rating = this.socialService.rateMovie(this.movie.id).pipe(first(),
+      map((val: RatingModel) => val.count)
+    );
   }
 
   ngOnDestroy() {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {VideoProductionModel} from "../models/VideoProduction.model";
-import {MessageModel} from "../models/message.model";
+import {MessageModel, RatingModel} from "../models/message.model";
 import {map} from "rxjs/operators";
 
 @Injectable({
@@ -48,6 +48,18 @@ export class SocialService {
   sendMessage(token: string, message: MessageModel) {
     return this.http.post(this.socialURL + '/messages', message, {
       headers: this.commonHttpHeaders.append('token', token)
+    });
+  }
+
+  getRating(movieId: number): Observable<RatingModel> {
+    return this.http.get<RatingModel>(this.socialURL + '/rating?id=' + movieId, {
+      headers: this.commonHttpHeaders
+    });
+  }
+
+  rateMovie(movieId: number): Observable<RatingModel> {
+    return this.http.get<RatingModel>(this.socialURL + '/rating/add?id=' + movieId, {
+      headers: this.commonHttpHeaders
     });
   }
 }

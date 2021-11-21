@@ -6,3 +6,8 @@ export class MessageModel {
   type?: string
   resolvedMovie?: any
 }
+
+export class RatingModel {
+  movieId: number
+  count: number
+}

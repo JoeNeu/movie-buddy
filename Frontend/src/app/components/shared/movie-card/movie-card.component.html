@@ -3,6 +3,7 @@
     <mat-card-title>
       {{movie.title ? movie.title : movie.name}}
     </mat-card-title>
+    <button mat-mini-fab>{{rating | async}}</button>
 
     <!--Space-->
     <div style="height: 250px;"></div>
@@ -26,10 +27,13 @@
 
   <mat-card-actions>
     <div *ngIf="loggedIn; else notLoggedIn">
-      <button mat-button color="white" style="background: #141414">LIKE</button>
       <button mat-button color="white" style="background: #141414"
-              (click)="shareWithFriends()"
-      >SHARE
+              (click)="likeMovie()">
+        LIKE
+      </button>
+      <button mat-button color="white" style="background: #141414"
+              (click)="shareWithFriends()">
+        SHARE
       </button>
       <button mat-button color="white" style="background: #141414"
               (click)="addToFavorites()">

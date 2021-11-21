@@ -67,7 +67,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
     FavoritesComponent,
     WatchlistComponent,
     DetailComponent,
-    MessageDialogComponent
+    MessageDialogComponent,
   ],
     imports: [
         BrowserModule,
