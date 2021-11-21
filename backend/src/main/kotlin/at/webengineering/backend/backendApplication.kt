@@ -25,8 +25,48 @@ class BackendApplication(
                     AccountCreationDto(
                         username = "admin",
                         password = "admin",
-                        firstname = "firstname",
-                        lastname = "lastname"
+                        firstname = "Peter",
+                        lastname = "Administrator"
+                    )
+                )
+                accountService.createAccount(
+                    AccountCreationDto(
+                        username = "Movie3000",
+                        password = "admin",
+                        firstname = "Martin",
+                        lastname = "Huber"
+                    )
+                )
+                accountService.createAccount(
+                    AccountCreationDto(
+                        username = "SuperSpecial5000",
+                        password = "admin",
+                        firstname = "Marc",
+                        lastname = "Heinz"
+                    )
+                )
+                accountService.createAccount(
+                    AccountCreationDto(
+                        username = "xXxNoScope360xXx",
+                        password = "admin",
+                        firstname = "Johannes",
+                        lastname = "Müller"
+                    )
+                )
+                accountService.createAccount(
+                    AccountCreationDto(
+                        username = "Filmkritiker",
+                        password = "admin",
+                        firstname = "Sir. Albert",
+                        lastname = "Von Hausen"
+                    )
+                )
+                accountService.createAccount(
+                    AccountCreationDto(
+                        username = "Nice",
+                        password = "admin",
+                        firstname = "Herbert",
+                        lastname = "X"
                     )
                 )
             }

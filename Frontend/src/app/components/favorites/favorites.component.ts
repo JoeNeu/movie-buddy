@@ -57,9 +57,7 @@ export class FavoritesComponent implements OnInit, OnDestroy {
         return zip(...movies.map( v => this.movieService.getMovieById(v.movieId)))
       })
     ).subscribe((movies: tmdbMovie[]) => {
-      this.favoriteMovies = movies.map(movie => {
-        return {...movie, path: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + movie.poster_path}
-      })
+      this.favoriteMovies = movies;
     });
 
     this.favoritesSelectorService.getAllFavoriteShows().pipe(
@@ -68,9 +66,7 @@ export class FavoritesComponent implements OnInit, OnDestroy {
         return zip(...shows.map( v => this.movieService.getTvShowById(v.movieId)))
       })
     ).subscribe((shows: tmdbTvShow[]) => {
-      this.favoriteTvShows = shows.map(show => {
-        return {...show, path: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + show.poster_path}
-      })
+      this.favoriteTvShows = shows;
     });
 
     this.favoritesSelectorService.getAllFavoriteMoviesFromFriend().pipe(
@@ -79,9 +75,7 @@ export class FavoritesComponent implements OnInit, OnDestroy {
         return zip(...movies.map( v => this.movieService.getMovieById(v.movieId)))
       })
     ).subscribe((movies: tmdbMovie[]) => {
-      this.favoriteMoviesFromFriend = movies.map(movie => {
-        return {...movie, path: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + movie.poster_path}
-      })
+      this.favoriteMoviesFromFriend = movies;
     });
 
     this.favoritesSelectorService.getAllFavoriteShowsFromFriend().pipe(
@@ -90,9 +84,7 @@ export class FavoritesComponent implements OnInit, OnDestroy {
         return zip(...shows.map( v => this.movieService.getTvShowById(v.movieId)))
       })
     ).subscribe((shows: tmdbTvShow[]) => {
-      this.favoriteTvShowsFromFriend = shows.map(show => {
-        return {...show, path: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + show.poster_path}
-      })
+      this.favoriteTvShowsFromFriend = shows;
     });
   }
 

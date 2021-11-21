@@ -41,7 +41,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   messageButton() {
-    this.router.navigate(['message']);
+    this.router.navigate(['messages']);
   }
 
   accountButton() {

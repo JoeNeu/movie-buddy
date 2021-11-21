@@ -5,7 +5,7 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-data class Account (
+data class Account(
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -32,14 +32,19 @@ data class Account (
 
     @ElementCollection
     @CollectionTable(
-            joinColumns = [JoinColumn(name="ACCOUNT_ID")]
+        joinColumns = [JoinColumn(name = "ACCOUNT_ID")]
     )
     var favorites: MutableList<VideoProduction>,
 
     @ElementCollection
     @CollectionTable(
-            joinColumns = [JoinColumn(name="ACCOUNT_ID")]
+        joinColumns = [JoinColumn(name = "ACCOUNT_ID")]
     )
-    var watchlist: MutableList<VideoProduction>
+    var watchlist: MutableList<VideoProduction>,
 
+    @ElementCollection
+    @CollectionTable(
+        joinColumns = [JoinColumn(name = "ACCOUNT_ID")]
+    )
+    var messages: MutableList<Message>,
 )

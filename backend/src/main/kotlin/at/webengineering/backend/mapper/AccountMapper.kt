@@ -22,7 +22,8 @@ class AccountMapper(
             isAdministrator = false,
             friends = mutableListOf(),
             favorites = mutableListOf(),
-            watchlist = mutableListOf()
+            watchlist = mutableListOf(),
+            messages = mutableListOf()
         )
     }
 

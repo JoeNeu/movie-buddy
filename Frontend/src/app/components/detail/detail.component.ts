@@ -22,7 +22,6 @@ export class DetailComponent implements OnInit, OnDestroy {
     ).subscribe(params => {
       this.id = params['id'];
     })
-    console.log(this.id)
   }
 
   ngOnInit(): void {

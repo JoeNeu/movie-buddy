@@ -4,7 +4,6 @@ import {Observable} from 'rxjs';
 import {VideoProductionModel} from '../../models/VideoProduction.model';
 import * as fromRoot from '../../app.store';
 import * as fromWatchlist from '../watchlist/+state/watchlist.reducer';
-import {getSelectedFriend} from "../watchlist/+state/watchlist.reducer";
 import {AccountModel} from "../../models/account.model";
 
 @Injectable({

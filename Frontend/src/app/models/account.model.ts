@@ -1,3 +1,5 @@
+import {MessageModel} from "./message.model";
+
 export class AccountModel {
   id: string;
   username: string;
@@ -5,6 +7,7 @@ export class AccountModel {
   lastname: string;
   isAdministrator: boolean;
   token: string;
+  messages?: MessageModel[]
 }
 
 export class RegisterDto {
