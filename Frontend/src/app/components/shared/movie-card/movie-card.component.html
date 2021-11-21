@@ -1,5 +1,5 @@
 <mat-card [style.background-image]="'url(' + movie.path + ')'">
-  <mat-card-header class="card-heading" (click)="openMovieCard(movie.id)">
+  <mat-card-header class="card-heading" (click)="openMovieCard(movie.id, movie.release_date ? true : false)">
     <mat-card-title>
       {{movie.title ? movie.title : movie.name}}
     </mat-card-title>

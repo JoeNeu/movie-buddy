@@ -1,0 +1,46 @@
+.table {
+  width: 100%;
+  margin-top: 20px;
+
+}
+
+input {
+  width: 300px;
+}
+
+section {
+  display: table;
+}
+
+.example-label {
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 120px;
+}
+
+.general-info{
+  float: left;
+  margin-right:15px;
+}
+
+.season-info {
+  float: left;
+  height: 225px;
+  width: 150px;
+  margin-right:15px;
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-headers-align .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}

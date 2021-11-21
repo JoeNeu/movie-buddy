@@ -1,1 +1,112 @@
-<p>detail works!</p>
+<mat-tab-group mat-align-tabs="left" #tabGroup (selectedTabChange)="tabChanged($event)">
+  <mat-tab label="General Info">
+    <div class="container">
+      <h2>{{item.name}}</h2>
+      <img class="general-info" [alt]="item.name + 'Poster'" [src]="'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + item.poster_path">
+      <section>
+        <div class="example-label">Status</div>
+        <div>
+          {{item.status}}
+        </div>
+      </section>
+      <mat-divider></mat-divider>
+      <section>
+        <div class="example-label">Language</div>
+        <div>
+          {{item.original_language.toUpperCase()}}
+        </div>
+      </section>
+      <mat-divider></mat-divider>
+      <section>
+        <div class="example-label">Genres</div>
+        <div>
+          <p *ngFor="let genre of item.genres">{{genre.name}} </p>
+        </div>
+      </section>
+      <mat-divider></mat-divider>
+      <section>
+        <div class="example-label">First Air Date</div>
+        <div>
+          {{item.first_air_date}}
+        </div>
+      </section>
+      <mat-divider></mat-divider>
+      <section>
+        <div class="example-label">Creators</div>
+        <div>
+          <p *ngFor="let creator of item.created_by">{{creator.name}} </p>
+        </div>
+      </section>
+      <mat-divider></mat-divider>
+      <section>
+        <div class="example-label">Seasons</div>
+        <div>
+          {{item.number_of_seasons}}
+        </div>
+      </section>
+      <mat-divider></mat-divider>
+      <section>
+        <div class="example-label">Episodes</div>
+        <div>
+          {{item.number_of_episodes}}
+        </div>
+      </section>
+      <mat-divider></mat-divider>
+      <section>
+        <div class="example-label">Episode Runtime</div>
+        <div>
+          {{item.episode_run_time[0]}}
+        </div>
+      </section>
+      <mat-divider></mat-divider>
+      <section>
+        <div class="example-label">Overview</div>
+        <div>
+          {{item.overview}}
+        </div>
+      </section>
+    </div>
+  </mat-tab>
+
+  <mat-tab *ngIf="!isMovie" label="Seasons">
+    <div class="example-action-buttons">
+      <button mat-button (click)="accordion.openAll()">Expand All</button>
+      <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+    </div>
+    <mat-accordion class="example-headers-align">
+      <mat-expansion-panel *ngFor="let season of item.seasons; index as i; let last = last" [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{season.name}}
+          </mat-panel-title>
+          <mat-panel-description>
+            Air Date: {{season.air_date.slice(0,4)}}
+          </mat-panel-description>
+          <mat-panel-description>
+            Episodes: {{season.episode_count}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div>
+          <p><img class="season-info" [alt]="season.name + 'Poster'" [src]="'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + season.poster_path">Overview: {{season.overview}}</p>
+        </div>
+
+        <mat-action-row>
+          <button *ngIf="i > 0" mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button *ngIf="!last" mat-button color="primary" (click)="nextStep()">Next</button>
+          <button *ngIf="last" mat-button color="primary" (click)="nextStep()">End</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-tab>
+
+  <mat-tab [label]=similarTabLabelName>
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-3 col-lg-4 col-sm-6" *ngFor="let item of itemSimilarSearchResult">
+          <app-movie-card [movie]="item"></app-movie-card>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>

@@ -53,4 +53,32 @@ export class MovieService {
       })
     );
   }
+
+  getSimilarMoviesForId(id): Observable<tmdbModel> {
+    return this.http.get<tmdbModel>(`${this.themoviedbUrl}/movie/${id}/similar?api_key=${this.themoviedbApiKey}`);
+  }
+
+  getSimilarTvShowsForId(id): Observable<tmdbModel> {
+    return this.http.get<tmdbModel>(`${this.themoviedbUrl}/tv/${id}/similar?api_key=${this.themoviedbApiKey}`);
+  }
+
+  getSeasonForTvShowById(id, seasonNumber): Observable<tmdbTvShow> {
+    return this.http.get<tmdbTvShow>(`${this.themoviedbUrl}/tv/${id}/season/${seasonNumber}?api_key=${this.themoviedbApiKey}`);
+  }
+
+  getEpisodeForTvShowById(id, seasonNumber, episodeNumber): Observable<tmdbTvShow> {
+    return this.http.get<tmdbTvShow>(`${this.themoviedbUrl}/tv/${id}/season/${seasonNumber}/episode/${episodeNumber}?api_key=${this.themoviedbApiKey}`);
+  }
+
+  getEpisodeImagesForTvShowById(id, seasonNumber, episodeNumber): Observable<any> {
+    return this.http.get<any>(`${this.themoviedbUrl}/tv/${id}/season/${seasonNumber}/episode/${episodeNumber}/images?api_key=${this.themoviedbApiKey}`);
+  }
+
+  getMoviesForActor(actorId): Observable<tmdbMovie[]> {
+    return this.http.get<tmdbMovie[]>(`${this.themoviedbUrl}/person/${actorId}/movie_credits?api_key=${this.themoviedbApiKey}`);
+  }
+
+  getTvShowsForActor(actorId): Observable<tmdbTvShow[]> {
+    return this.http.get<tmdbTvShow[]>(`${this.themoviedbUrl}/person/${actorId}/tv_credits?api_key=${this.themoviedbApiKey}`);
+  }
 }
