@@ -19,7 +19,7 @@ export class DetailComponent implements OnInit, OnDestroy {
   private currentTab: number;
 
   item;
-  isMovie: boolean;
+  isMovie: boolean = false;
   id;
   similarTabLabelName;
   itemSimilarSearchResult = [];
@@ -30,7 +30,6 @@ export class DetailComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute, private movieService: MovieService
   ) {
-    console.log('please');
     this.route.queryParams.pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(params => {
@@ -41,9 +40,6 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.setLabelName();
       /* tslint:enable:no-string-literal */
     });
-    console.log(this.id);
-    console.log(this.isMovie);
-    console.log(typeof this.isMovie);
   }
 
   ngOnInit(): void {
@@ -81,7 +77,7 @@ export class DetailComponent implements OnInit, OnDestroy {
   }
 
   private setLabelName(): void {
-    if (this.isMovie === true){
+    if (this.isMovie){
       this.similarTabLabelName = 'Similar Movies';
     }
     else{

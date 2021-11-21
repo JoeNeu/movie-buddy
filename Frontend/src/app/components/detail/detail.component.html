@@ -1,8 +1,9 @@
-<mat-tab-group mat-align-tabs="left" #tabGroup (selectedTabChange)="tabChanged($event)">
+<mat-tab-group mat-align-tabs="left" #tabGroup (selectedTabChange)="tabChanged($event)" *ngIf="item">
   <mat-tab label="General Info">
     <div class="container">
       <h2>{{item.name}}</h2>
-      <img class="general-info" [alt]="item.name + 'Poster'" [src]="'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + item.poster_path">
+      <img class="general-info" [alt]="item.name + 'Poster'"
+           [src]="'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + item.poster_path">
       <section>
         <div class="example-label">Status</div>
         <div>
@@ -74,13 +75,14 @@
       <button mat-button (click)="accordion.closeAll()">Collapse All</button>
     </div>
     <mat-accordion class="example-headers-align">
-      <mat-expansion-panel *ngFor="let season of item.seasons; index as i; let last = last" [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+      <mat-expansion-panel *ngFor="let season of item.seasons; index as i; let last = last" [expanded]="step === 0"
+                           (opened)="setStep(0)" hideToggle>
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{season.name}}
           </mat-panel-title>
           <mat-panel-description>
-            Air Date: {{season.air_date.slice(0,4)}}
+            Air Date: {{season.air_date.slice(0, 4)}}
           </mat-panel-description>
           <mat-panel-description>
             Episodes: {{season.episode_count}}
@@ -88,7 +90,9 @@
         </mat-expansion-panel-header>
 
         <div>
-          <p><img class="season-info" [alt]="season.name + 'Poster'" [src]="'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + season.poster_path">Overview: {{season.overview}}</p>
+          <p><img class="season-info" [alt]="season.name + 'Poster'"
+                  [src]="'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + season.poster_path">Overview: {{season.overview}}
+          </p>
         </div>
 
         <mat-action-row>
