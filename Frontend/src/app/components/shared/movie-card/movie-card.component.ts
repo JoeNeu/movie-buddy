@@ -98,8 +98,8 @@ export class MovieCardComponent implements OnInit, OnDestroy {
     this.store.dispatch(GetAllWatchlistItemsAction());
   }
 
-  openMovieCard(id: string) {
-    this.router.navigate(['detail'], { queryParams: { id } })
+  openMovieCard(id: string, isMovie: boolean) {
+    this.router.navigate(['detail'], { queryParams: { id, isMovie } });
   }
 
   getProductionType(movie): string {

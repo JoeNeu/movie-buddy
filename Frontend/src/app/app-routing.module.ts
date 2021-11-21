@@ -12,6 +12,7 @@ import {InfoComponent} from './components/info/info.component';
 import {MessagesComponent} from './components/messages/messages.component';
 import {FavoritesComponent} from './components/favorites/favorites.component';
 import {WatchlistComponent} from './components/watchlist/watchlist.component';
+import {DetailComponent} from "./components/detail/detail.component";
 
 const appRoutes: Routes = [
   {
@@ -69,7 +70,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'detail',
-    component: WatchlistComponent,
+    component: DetailComponent,
     canActivate: []
   },
 ];
