@@ -51,7 +51,6 @@ export class SearchComponent implements OnInit, OnDestroy {
       }
     });
     this.movieService.getMovieGenres().subscribe(genres => {
-      console.log(typeof genres);
       this.movieGenres = genres.genres;
       });
     this.movieService.getTvShowGenres().subscribe(genres => {
@@ -88,14 +87,6 @@ export class SearchComponent implements OnInit, OnDestroy {
           });
         }
       );
-  }
-
-  private extractGenresFromResult(genres: Genre[]): void {
-    console.log(genres);
-    this.genreNames = [];
-    genres.map(genre => {
-      this.genreNames.push(genre.name);
-    });
   }
 
   ngOnDestroy(): void {

@@ -27,7 +27,7 @@
       <mat-label>Genre</mat-label>
       <mat-select [(value)]="movieSelected">
         <mat-option>All</mat-option>
-        <mat-option *ngFor="let genre of movieGenres" [value]="genre">{{genre.name}}</mat-option>
+        <mat-option *ngFor="let genre of movieGenres" [value]="genre.id">{{genre.name}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -45,7 +45,7 @@
       <mat-label>Genre</mat-label>
       <mat-select [(value)]="tvShowSelected">
         <mat-option>All</mat-option>
-        <mat-option *ngFor="let genre of tvShowGenres" [value]="genre">{{genre.name}}</mat-option>
+        <mat-option *ngFor="let genre of tvShowGenres" [value]="genre.id">{{genre.name}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
