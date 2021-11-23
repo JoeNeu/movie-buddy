@@ -2,6 +2,30 @@
   <mat-tab label="General Info">
     <app-tv-show-detail *ngIf="!isMovie" [item]="item"></app-tv-show-detail>
     <app-movie-detail *ngIf="isMovie" [item]="item"></app-movie-detail>
+    <div class="mt-4">
+      <div *ngIf="loggedIn; else notLoggedIn">
+        <button mat-stroked-button color="primary" (click)="likeMovie()">
+          LIKE
+        </button>
+        <button mat-stroked-button color="primary" (click)="shareWithFriends()">
+          SHARE
+        </button>
+        <button mat-stroked-button color="primary" (click)="addToFavorites()">
+          <mat-icon *ngIf="isAlreadyFavorite">favorite</mat-icon>
+          <mat-icon *ngIf="!isAlreadyFavorite">favorite_border</mat-icon>
+          &emsp;ADD
+        </button>
+        <button mat-stroked-button color="primary" (click)="addToWatchlist()">
+          <mat-icon *ngIf="isAlreadyInWatchlist">playlist_remove</mat-icon>
+          <mat-icon *ngIf="!isAlreadyInWatchlist">subscriptions</mat-icon>
+          &emsp;WATCH
+        </button>
+      </div>
+      <ng-template #notLoggedIn>
+        Log in or create an account to use the social features.
+        <button mat-stroked-button color="primary" (click)="goToProfile()">Profile</button>
+      </ng-template>
+    </div>
   </mat-tab>
 
   <mat-tab *ngIf="!isMovie" label="Seasons">
