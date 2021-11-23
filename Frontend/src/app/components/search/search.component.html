@@ -19,11 +19,20 @@
   </div>
 </div>
 <div #movieAnchor></div>
+
 <div class="container" *ngIf="movieSearchResult.length > 0">
   <h1>MOVIES</h1>
-
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Genre</mat-label>
+      <mat-select [(value)]="movieSelected">
+        <mat-option>All</mat-option>
+        <mat-option *ngFor="let genre of movieGenres" [value]="genre">{{genre.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <div class="row">
-    <div class="col-xl-3 col-lg-4 col-sm-6" *ngFor="let movie of movieSearchResult">
+    <div class="col-xl-3 col-lg-4 col-sm-6" *ngFor="let movie of (movieSearchResult | movieFilter:movieSelected)">
       <app-movie-card [movie]="movie" [loggedIn]="loggedIn"></app-movie-card>
     </div>
   </div>
@@ -31,8 +40,17 @@
 
 <div class="container" *ngIf="tvShowSearchResult.length > 0">
   <h1>TV SHOWS</h1>
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Genre</mat-label>
+      <mat-select [(value)]="tvShowSelected">
+        <mat-option>All</mat-option>
+        <mat-option *ngFor="let genre of tvShowGenres" [value]="genre">{{genre.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <div class="row">
-    <div class="col-xl-3 col-lg-4 col-sm-6" *ngFor="let show of tvShowSearchResult">
+    <div class="col-xl-3 col-lg-4 col-sm-6" *ngFor="let show of (tvShowSearchResult | movieFilter:tvShowSelected)">
       <app-movie-card [movie]="show" [loggedIn]="loggedIn"></app-movie-card>
     </div>
   </div>

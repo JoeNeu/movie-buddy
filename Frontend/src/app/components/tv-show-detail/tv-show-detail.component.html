@@ -1,0 +1,68 @@
+<div class="container">
+  <h2>{{item.name}}</h2>
+  <img class="general-info" [alt]="item.name + 'Poster'"
+       [src]="'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + item.poster_path">
+  <section>
+    <div class="example-label">Status</div>
+    <div>
+      {{item.status}}
+    </div>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div class="example-label">Language</div>
+    <div>
+      {{item.original_language.toUpperCase()}}
+    </div>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div class="example-label">Genres</div>
+    <div>
+      <p *ngFor="let genre of item.genres">{{genre.name}} </p>
+    </div>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div class="example-label">First Air Date</div>
+    <div>
+      {{item.first_air_date}}
+    </div>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div class="example-label">Creators</div>
+    <div>
+      <p *ngFor="let creator of item.created_by">{{creator.name}} </p>
+    </div>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div class="example-label">Seasons</div>
+    <div>
+      {{item.number_of_seasons}}
+    </div>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div class="example-label">Episodes</div>
+    <div>
+      {{item.number_of_episodes}}
+    </div>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div class="example-label">Episode Runtime</div>
+    <div>
+      {{item.episode_run_time[0]}}
+    </div>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div class="example-label">Overview</div>
+    <div>
+      {{item.overview}}
+    </div>
+  </section>
+
+</div>
