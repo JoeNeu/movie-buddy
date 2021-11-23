@@ -4,6 +4,8 @@
     <app-movie-detail *ngIf="isMovie" [item]="item"></app-movie-detail>
     <div class="mt-4">
       <div *ngIf="loggedIn; else notLoggedIn">
+        <button mat-mini-fab>{{rating | async}}</button>
+
         <button mat-stroked-button color="primary" (click)="likeMovie()">
           LIKE
         </button>

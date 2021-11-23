@@ -27,6 +27,7 @@ import {AccountModel} from "../../models/account.model";
 import * as fromRoot from "../../app.store";
 import * as fromFavorites from "../favorites/+state/favorites.reducer";
 import * as fromWatchlist from "../watchlist/+state/watchlist.reducer";
+import {WatchlistSelectorService} from "../watchlist/watchlist-selector.service";
 
 @Component({
   selector: 'app-detail',
@@ -47,10 +48,8 @@ export class DetailComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject();
 
   step = 0;
-  favorites = [];
-  watchlist = [];
-  isAlreadyFavorite = false;
-  isAlreadyInWatchlist = false;
+  isAlreadyFavorite: boolean;
+  isAlreadyInWatchlist: boolean;
   rating: Observable<number>;
   loggedIn;
 
@@ -60,7 +59,8 @@ export class DetailComponent implements OnInit, OnDestroy {
     private store: Store,
     private router: Router,
     public dialog: MatDialog,
-    private socialService: SocialService
+    private socialService: SocialService,
+    private watchlistSelectorService: WatchlistSelectorService,
   ) {
     this.route.queryParams.pipe(
       takeUntil(this.unsubscribe$)
@@ -75,6 +75,10 @@ export class DetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.rating = this.socialService.getRating(+this.id).pipe(first(),
+      map((val: RatingModel) => val.count)
+    );
+
     this.store.select(getCurrentUser).pipe(takeUntil(this.unsubscribe$)).subscribe((user: AccountModel) => {
       if(user) {
         this.loggedIn = true;
@@ -87,27 +91,17 @@ export class DetailComponent implements OnInit, OnDestroy {
             fromRoot.favoritesState, fromFavorites.getAllFavorites()
           ))
         ).subscribe((favorites: VideoProductionModel[]) => {
-          this.favorites = favorites;
-          console.log("fav", favorites)
-          this.isAlreadyFavorite = this.favorites
-            .find((fav) => {
-              const productionType = this.getProductionType(this.item);
-              return fav.productionType === productionType && fav.movieId === this.item.id;
-            });
+          this.isAlreadyFavorite = favorites.filter((fav: VideoProductionModel) => {
+            return fav.movieId === +this.id;
+          }).length > 0;
         });
 
-        this.store.pipe(
-          takeUntil(this.unsubscribe$),
-          select(createSelector(
-            fromRoot.watchlistState, fromWatchlist.getAllWatchlistItems()
-          ))
+        this.watchlistSelectorService.getWatchlistMovies().pipe(
+          takeUntil(this.unsubscribe$)
         ).subscribe((watchlistItems: VideoProductionModel[]) => {
-          this.watchlist = watchlistItems;
-          this.isAlreadyInWatchlist = this.watchlist
-            .find((item) => {
-              const productionType = this.getProductionType(this.item);
-              return item.productionType === productionType && item.movieId === this.item.id;
-            });
+          this.isAlreadyInWatchlist = watchlistItems.filter((item: VideoProductionModel) => {
+            return item.movieId === +this.id;
+          }).length > 0;
         });
       }
     });
