@@ -43,9 +43,9 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
       takeUntil(this.unsubscribe$)
     ).subscribe(params => {
       this.nextPage = params['route'] || 'account';
+      // Debugging for instant login
+      // this.login(this.nextPage)
     })
-    // Debugging for instant login
-    // this.login(this.nextPage)
   }
 
   ngAfterViewInit() {
