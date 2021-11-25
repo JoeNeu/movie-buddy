@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
       this.nextPage = params['route'] || 'account';
     })
     // Debugging for instant login
-    // this.login()
+    // this.login(this.nextPage)
   }
 
   ngAfterViewInit() {
@@ -76,13 +76,13 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   //Debugging for instant login
-  // login() {
+  // login(page: string) {
   //   this.store.dispatch(LoginAction({
   //     loginDto: {
   //       username: "admin",
   //       password: "admin"
   //     },
-  //     route: "messages"
+  //     route: page
   //   }));
   // }
 
