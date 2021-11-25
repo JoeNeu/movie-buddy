@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MovieService} from '../../movies/movie.service';
-import {tmdbModel} from '../../models/the-movie-db.model';
+import {Genre, tmdbModel} from '../../models/the-movie-db.model';
 import {MatAccordion} from '@angular/material/expansion';
 import {FormControl} from '@angular/forms';
 import {ViewportScroller} from "@angular/common";
@@ -21,9 +21,17 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   searchControl = new FormControl('');
 
+  movieSelected;
+  tvShowSelected;
+
   movieSearchValue = '';
   movieSearchResult = [];
   tvShowSearchResult = [];
+
+  movieGenres = [];
+  tvShowGenres = [];
+
+  genreNames = [];
 
   loggedIn = false;
   currentUser;
@@ -41,7 +49,13 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.loggedIn = true;
         this.currentUser = user;
       }
-    })
+    });
+    this.movieService.getMovieGenres().subscribe(genres => {
+      this.movieGenres = genres.genres;
+      });
+    this.movieService.getTvShowGenres().subscribe(genres => {
+      this.tvShowGenres = genres.genres;
+    });
   }
 
   enterSubmit(event): void {
@@ -59,7 +73,7 @@ export class SearchComponent implements OnInit, OnDestroy {
               path: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + obj.poster_path
             };
           });
-        this.MyProp.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" });
+          this.MyProp.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       );
 
@@ -75,7 +89,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }

@@ -6,7 +6,7 @@ export class tmdbModel {
 }
 
 
-class tmdbVideo {
+export class tmdbVideo {
   id: number;
   genre_ids: [number];
   original_language: string;
@@ -17,15 +17,20 @@ class tmdbVideo {
   backdrop_path?: string;
   poster_path?: string;
   overview: string;
+  status: string;
+  genres?: Genre[];
 }
 
 
 export class tmdbMovie extends tmdbVideo {
   adult: boolean;
+  budget: number;
   release_date: string;
   original_title: string;
   title: string;
   video: boolean;
+  runtime: number;
+  revenue: number;
 }
 
 export class tmdbTvShow extends tmdbVideo {
@@ -38,8 +43,6 @@ export class tmdbTvShow extends tmdbVideo {
   seasons: [SeasonInfo];
   last_episode_to_air: EpisodeInfo;
   episode_run_time: [number];
-  status: string;
-  genres: [Genre];
   created_by: [Creator];
 }
 

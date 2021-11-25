@@ -1,0 +1,67 @@
+<div class="container">
+  <h2>{{item.title}}</h2>
+  <img class="general-info" [alt]="item.title + 'Poster'"
+       [src]="'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + item.poster_path">
+  <section>
+    <div class="example-label">Original Title</div>
+    <div>
+      {{item.original_title}}
+    </div>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div class="example-label">Status</div>
+    <div>
+      {{item.status}}
+    </div>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div class="example-label">Language</div>
+    <div>
+      {{item.original_language.toUpperCase()}}
+    </div>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div class="example-label">Genres</div>
+    <div>
+      <p *ngFor="let genre of item.genres">{{genre.name}} </p>
+    </div>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div class="example-label">Release Date</div>
+    <div>
+      {{item.release_date}}
+    </div>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div class="example-label">Runtime</div>
+    <div>
+      {{item.runtime}}
+    </div>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div class="example-label">Budget</div>
+    <div>
+      {{item.budget | currency}}
+    </div>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div class="example-label">Revenue</div>
+    <div>
+      {{item.revenue | currency}}
+    </div>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div class="example-label">Overview</div>
+    <div>
+      {{item.overview}}
+    </div>
+  </section>
+</div>

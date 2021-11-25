@@ -1,11 +1,33 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {takeUntil} from "rxjs/operators";
-import {ActivatedRoute} from "@angular/router";
-import {Subject} from "rxjs";
+import {filter, find, first, map, takeUntil} from "rxjs/operators";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Observable, Subject} from "rxjs";
 import {MovieService} from "../../movies/movie.service";
 import {tmdbModel} from "../../models/the-movie-db.model";
 import {MatTabChangeEvent} from "@angular/material/tabs";
 import {MatAccordion} from "@angular/material/expansion";
+import {VideoProductionModel} from "../../models/VideoProduction.model";
+import {
+  AddToFavoritesAction,
+  GetAllFavoritesAction,
+  RemoveFromFavoritesAction
+} from "../favorites/+state/favorites.actions";
+import {
+  AddToWatchlistAction,
+  GetAllWatchlistItemsAction,
+  RemoveFromWatchlistAction
+} from "../watchlist/+state/watchlist.actions";
+import {MessageDialogComponent} from "../messages/message-dialog/message-dialog.component";
+import {RatingModel} from "../../models/message.model";
+import {createSelector, select, Store} from "@ngrx/store";
+import {MatDialog} from "@angular/material/dialog";
+import {SocialService} from "../../social/social.service";
+import {getCurrentUser} from "../../core/+state/core.reducer";
+import {AccountModel} from "../../models/account.model";
+import * as fromRoot from "../../app.store";
+import * as fromFavorites from "../favorites/+state/favorites.reducer";
+import * as fromWatchlist from "../watchlist/+state/watchlist.reducer";
+import {WatchlistSelectorService} from "../watchlist/watchlist-selector.service";
 
 @Component({
   selector: 'app-detail',
@@ -26,9 +48,19 @@ export class DetailComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject();
 
   step = 0;
+  isAlreadyFavorite: boolean;
+  isAlreadyInWatchlist: boolean;
+  rating: Observable<number>;
+  loggedIn;
 
   constructor(
-    private route: ActivatedRoute, private movieService: MovieService
+    private route: ActivatedRoute,
+    private movieService: MovieService,
+    private store: Store,
+    private router: Router,
+    public dialog: MatDialog,
+    private socialService: SocialService,
+    private watchlistSelectorService: WatchlistSelectorService,
   ) {
     this.route.queryParams.pipe(
       takeUntil(this.unsubscribe$)
@@ -43,6 +75,37 @@ export class DetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.rating = this.socialService.getRating(+this.id).pipe(first(),
+      map((val: RatingModel) => val.count)
+    );
+
+    this.store.select(getCurrentUser).pipe(takeUntil(this.unsubscribe$)).subscribe((user: AccountModel) => {
+      if(user) {
+        this.loggedIn = true;
+        this.store.dispatch(GetAllWatchlistItemsAction());
+        this.store.dispatch(GetAllFavoritesAction());
+
+        this.store.pipe(
+          takeUntil(this.unsubscribe$),
+          select(createSelector(
+            fromRoot.favoritesState, fromFavorites.getAllFavorites()
+          ))
+        ).subscribe((favorites: VideoProductionModel[]) => {
+          this.isAlreadyFavorite = favorites.filter((fav: VideoProductionModel) => {
+            return fav.movieId === +this.id;
+          }).length > 0;
+        });
+
+        this.watchlistSelectorService.getWatchlistMovies().pipe(
+          takeUntil(this.unsubscribe$)
+        ).subscribe((watchlistItems: VideoProductionModel[]) => {
+          this.isAlreadyInWatchlist = watchlistItems.filter((item: VideoProductionModel) => {
+            return item.movieId === +this.id;
+          }).length > 0;
+        });
+      }
+    });
+
     if (this.isMovie === true){
       this.movieService.getMovieById(this.id).subscribe( movieDetails => {
         this.item = movieDetails;
@@ -100,6 +163,66 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   prevStep(): void {
     this.step--;
+  }
+
+  addToFavorites() {
+    const productionType = this.getProductionType(this.item);
+
+    const favorite: VideoProductionModel = {
+      movieId: this.item.id,
+      productionType,
+      uid: productionType + this.item.id
+    };
+
+    if (this.isAlreadyFavorite) {
+      this.store.dispatch(RemoveFromFavoritesAction({favorite}));
+    } else {
+      this.store.dispatch(AddToFavoritesAction({favorite}));
+    }
+
+    this.store.dispatch(GetAllFavoritesAction());
+  }
+
+  addToWatchlist() {
+    const productionType = this.getProductionType(this.item);
+
+    const favorite: VideoProductionModel = {
+      movieId: this.item.id,
+      productionType,
+      uid: productionType + this.item.id
+    };
+
+    if (this.isAlreadyInWatchlist) {
+      this.store.dispatch(RemoveFromWatchlistAction({favorite}));
+    } else {
+      this.store.dispatch(AddToWatchlistAction({favorite}));
+    }
+
+    this.store.dispatch(GetAllWatchlistItemsAction());
+  }
+
+  getProductionType(movie): string {
+    return movie.name ? 'TVSHOW' : 'MOVIE';
+  }
+
+  shareWithFriends() {
+    const dialogRef = this.dialog.open(MessageDialogComponent, {
+      width: '250px',
+      data: {
+        movieId: this.item.id,
+        type: this.getProductionType(this.item)
+      }
+    });
+  }
+
+  likeMovie() {
+    this.rating = this.socialService.rateMovie(this.item.id).pipe(first(),
+      map((val: RatingModel) => val.count)
+    );
+  }
+
+  goToProfile() {
+    this.router.navigate(['account']);
   }
 
   ngOnDestroy(): void {

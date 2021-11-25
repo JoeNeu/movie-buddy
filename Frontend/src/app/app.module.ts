@@ -48,6 +48,9 @@ import {MatMenuModule} from "@angular/material/menu";
 import { DetailComponent } from './components/detail/detail.component';
 import { MessageDialogComponent } from './components/messages/message-dialog/message-dialog.component';
 import {MatGridListModule} from "@angular/material/grid-list";
+import { TvShowDetailComponent } from './components/tv-show-detail/tv-show-detail.component';
+import { MovieDetailComponent } from './components/movie-detail/movie-detail.component';
+import { MovieFilterPipe } from './pipes/movie-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -68,6 +71,9 @@ import {MatGridListModule} from "@angular/material/grid-list";
     WatchlistComponent,
     DetailComponent,
     MessageDialogComponent,
+    TvShowDetailComponent,
+    MovieDetailComponent,
+    MovieFilterPipe,
   ],
     imports: [
         BrowserModule,
